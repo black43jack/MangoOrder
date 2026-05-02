@@ -13,7 +13,7 @@ body { margin:0; font-family: Arial; background:#f5f5f5; }
 .container { padding:90px 10px 10px; }
 .grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
 .card { background:#fff; border-radius:10px; padding:10px; }
-.card img { width:100%; border-radius:8px; }
+.card img { width:100%; border-radius:8px; object-fit:cover; height:140px; }
 .card h4 { margin:5px 0; }
 .qty { display:flex; justify-content:space-between; align-items:center; }
 .btn { background:#ddd; border:none; padding:5px 10px; }
@@ -34,8 +34,10 @@ input, textarea { width:100%; padding:10px; margin:10px 0; }
 <div id="mainPage" class="container">
   <div class="grid">
 
+    <!-- IMPORTANT: Use local images stored in /images folder -->
+
     <div class="card kesar">
-      <img src="https://source.unsplash.com/400x300/?kesar-mango">
+      <img src="images/Mango1.jpg" alt="Kesar Mango">
       <h4>Kesar</h4>
       <div class="qty">
         <button class="btn" onclick="updateQty('kesar', -1)">-</button>
@@ -45,7 +47,7 @@ input, textarea { width:100%; padding:10px; margin:10px 0; }
     </div>
 
     <div class="card">
-      <img src="https://source.unsplash.com/400x300/?banganapalli-mango">
+      <img src="images/Mango1.jpg" alt="Banganapalli Mango">
       <h4>Banganapalli</h4>
       <div class="qty">
         <button class="btn" onclick="updateQty('banganapalli', -1)">-</button>
@@ -55,7 +57,7 @@ input, textarea { width:100%; padding:10px; margin:10px 0; }
     </div>
 
     <div class="card">
-      <img src="https://source.unsplash.com/400x300/?totapuri-mango">
+      <img src="images/Mango1.jpg" alt="Totapuri Mango">
       <h4>Totapuri</h4>
       <div class="qty">
         <button class="btn" onclick="updateQty('totapuri', -1)">-</button>
