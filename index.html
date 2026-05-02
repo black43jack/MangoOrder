@@ -1,54 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Mango Orders</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body { font-family: Arial; padding: 20px; background: #f7f7f7; }
-        .card { background: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; }
-        input, select, textarea { width: 100%; padding: 10px; margin-top: 8px; }
-        button { background: green; color: white; padding: 12px; border: none; width: 100%; border-radius: 8px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sudha Farms</title>
+<style>
+body { margin:0; font-family: Arial; background:#f5f5f5; }
+.header { position:fixed; top:0; width:100%; background:#fff; padding:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1); z-index:1000; }
+.title { font-size:20px; font-weight:bold; }
+.subtitle { color:green; font-size:12px; }
+.checkout { margin-top:5px; background:#28a745; color:#fff; padding:8px; text-align:center; border-radius:6px; cursor:pointer; }
+.container { padding:90px 10px 10px; }
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.card { background:#fff; border-radius:10px; padding:10px; }
+.card img { width:100%; border-radius:8px; }
+.card h4 { margin:5px 0; }
+.qty { display:flex; justify-content:space-between; align-items:center; }
+.btn { background:#ddd; border:none; padding:5px 10px; }
+.kesar { grid-column: span 2; }
+.hidden { display:none; }
+.page { padding:20px; }
+input, textarea { width:100%; padding:10px; margin:10px 0; }
+</style>
 </head>
 <body>
 
-<h2>🥭 Mango Order Form</h2>
+<div class="header">
+  <div class="title">Sudha Farms</div>
+  <div class="subtitle">Delivery only in Hyderabad</div>
+  <div class="checkout" onclick="goToSummary()">Checkout</div>
+</div>
 
-<form action="https://formspree.io/f/YOUR_ID" method="POST">
+<div id="mainPage" class="container">
+  <div class="grid">
 
-    <div class="card">
-        <label>Mango Variety</label>
-        <select name="variety">
-            <option>Kesar</option>
-            <option>Banganapalli</option>
-            <option>Rasalu</option>
-            <option>Totapuri</option>
-            <option>Neelam</option>
-        </select>
+    <div class="card kesar">
+      <img src="https://source.unsplash.com/400x300/?kesar-mango">
+      <h4>Kesar</h4>
+      <div class="qty">
+        <button class="btn" onclick="updateQty('kesar', -1)">-</button>
+        <span id="kesar">0</span>
+        <button class="btn" onclick="updateQty('kesar', 1)">+</button>
+      </div>
     </div>
 
     <div class="card">
-        <label>Quantity (kg)</label>
-        <input type="number" name="quantity" required>
+      <img src="https://source.unsplash.com/400x300/?banganapalli-mango">
+      <h4>Banganapalli</h4>
+      <div class="qty">
+        <button class="btn" onclick="updateQty('banganapalli', -1)">-</button>
+        <span id="banganapalli">0</span>
+        <button class="btn" onclick="updateQty('banganapalli', 1)">+</button>
+      </div>
     </div>
 
     <div class="card">
-        <label>Name</label>
-        <input type="text" name="name" required>
-
-        <label>Phone</label>
-        <input type="tel" name="phone" required>
-
-        <label>Address</label>
-        <textarea name="address" required></textarea>
-
-        <label>Location Link (Google Maps)</label>
-        <input type="text" name="location">
+      <img src="https://source.unsplash.com/400x300/?totapuri-mango">
+      <h4>Totapuri</h4>
+      <div class="qty">
+        <button class="btn" onclick="updateQty('totapuri', -1)">-</button>
+        <span id="totapuri">0</span>
+        <button class="btn" onclick="updateQty('totapuri', 1)">+</button>
+      </div>
     </div>
 
-    <button type="submit">Place Order</button>
+  </div>
+</div>
 
-</form>
+<div id="summaryPage" class="page hidden">
+  <h3>Order Summary</h3>
+  <div id="summary"></div>
+  <button onclick="confirmOrder()">Confirm</button>
+</div>
+
+<div id="detailsPage" class="page hidden">
+  <h3>Enter Details</h3>
+  <input placeholder="Name" id="name">
+  <input placeholder="Phone">
+  <textarea placeholder="Address"></textarea>
+  <button>Submit</button>
+</div>
+
+<script>
+let cart = { kesar:0, banganapalli:0, totapuri:0 };
+
+function updateQty(item, val) {
+  cart[item] = Math.max(0, cart[item] + val);
+  document.getElementById(item).innerText = cart[item];
+}
+
+function goToSummary() {
+  document.getElementById('mainPage').classList.add('hidden');
+  document.getElementById('summaryPage').classList.remove('hidden');
+
+  let summary = '';
+  for (let item in cart) {
+    if (cart[item] > 0) {
+      summary += item + ': ' + cart[item] + '<br>';
+    }
+  }
+  document.getElementById('summary').innerHTML = summary;
+}
+
+function confirmOrder() {
+  localStorage.setItem('orderConfirmed', 'true');
+  document.getElementById('summaryPage').classList.add('hidden');
+  document.getElementById('detailsPage').classList.remove('hidden');
+}
+</script>
 
 </body>
 </html>
