@@ -27,28 +27,20 @@ body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 .phone { max-width: 390px; margin: 0 auto; background: var(--bg2); min-height: 100vh; position: relative; }
 
 .header {
-  background: var(--forest);
-  padding: 20px 20px 16px;
+  height: 60px;
+  background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+              url('https://images.unsplash.com/photo-1591073113125-e46713c829ed?auto=format&fit=crop&q=80&w=800');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   position: relative;
   overflow: hidden;
 }
-.header::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(255,255,255,0.02) 8px, rgba(255,255,255,0.02) 9px);
-}
-.farm-badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: rgba(255,255,255,0.1);
-  border: 0.5px solid rgba(255,255,255,0.2);
-  border-radius: 20px; padding: 4px 12px; margin-bottom: 10px;
-  position: relative;
-}
-.farm-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #97C459; }
-.farm-badge span { font-size: 11px; color: rgba(255,255,255,0.8); letter-spacing: 0.5px; text-transform: uppercase; }
-.header h1 { font-size: 22px; font-weight: 600; color: #fff; margin: 0 0 4px; position: relative; }
-.header p { font-size: 11px; color: rgba(255,255,255,0.55); margin: 0; font-style: italic; line-height: 1.4; position: relative; }
+.header h1 { font-size: 17px; font-weight: 600; color: #fff; margin: 0; letter-spacing: 0.3px; }
+.header p { font-size: 10px; color: rgba(255,255,255,0.65); margin: 2px 0 0; font-style: italic; }
 
 .content { padding: 20px 16px 110px; }
 
@@ -166,9 +158,10 @@ body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 
 <div class="phone">
   <div class="header">
-    <div class="farm-badge"><div class="farm-badge-dot"></div><span>Organic Farm</span></div>
-    <h1>Sudha's Mangoes</h1>
-    <p>Nurtured by nature, ripened by the sun, delivered with love</p>
+    <div>
+      <h1>Sudha's Organic Farm</h1>
+      <p>Nurtured by nature, ripened by the sun, delivered with love</p>
+    </div>
   </div>
 
   <!-- PAGE 1: MENU -->
@@ -315,7 +308,7 @@ body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 </div>
 
 <script>
-
+  
 const PRICE = 290;
 const BOT_TOKEN = "8712573597:AAEHK2ykhiLhFTJrPIVIfFgJ5uqpkoTgsWA"; 
 const CHAT_ID = "-1003967477361";
