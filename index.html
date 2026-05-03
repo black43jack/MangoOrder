@@ -18,69 +18,64 @@
 
 body { 
     margin:0; 
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif; 
     background: var(--light); 
     color: var(--text);
-    line-height: 1.4;
 } 
 
-/* HEADER WITH BACKGROUND */
+/* SHRUNK HEADER (60% of previous) */
 .header { 
-    position:fixed; top:0; width:100%; height: 160px;
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+    position:fixed; top:0; width:100%; height: 100px;
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
                 url('https://images.unsplash.com/photo-1591073113125-e46713c829ed?auto=format&fit=crop&q=80&w=800');
     background-size: cover;
     background-position: center;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     color: white; text-align: center; z-index: 1000;
 }
-.header .title { font-size: 24px; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
-.header .caption { font-size: 14px; font-style: italic; opacity: 0.9; margin-top: 4px; }
+.header .title { font-size: 20px; font-weight: 800; }
+.header .caption { font-size: 11px; opacity: 0.9; margin-top: 2px; }
 
-/* SPACING TO AVOID OVERLAP */
-.container { padding: 180px 16px 120px; max-width: 600px; margin: 0 auto; }
+/* SPACING */
+.container { padding: 115px 12px 100px; max-width: 600px; margin: 0 auto; min-height: 100vh; }
 
 /* GRID & CARDS */
-.grid { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
-.card { background: var(--card); border-radius: 16px; padding: 10px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; }
-.card img { width:100%; border-radius:12px; object-fit:cover; height:120px; }
-.card h4 { margin: 8px 0 2px; font-size: 15px; font-weight: 700; }
-.price-tag { color: var(--price-color); font-weight: 700; font-size: 13px; margin-bottom: 8px; }
+.grid { display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+.card { background: var(--card); border-radius: 12px; padding: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+.card img { width:100%; border-radius:8px; object-fit:cover; height:110px; }
+.card h4 { margin: 6px 0 2px; font-size: 14px; font-weight: 700; }
+.price-tag { color: var(--price-color); font-weight: 700; font-size: 12px; margin-bottom: 6px; }
 .kesar { grid-column: span 2; }
-.kesar img { height: 180px; }
+.kesar img { height: 160px; }
 
 /* CONTROLS */
-.controls { display:flex; flex-direction:column; gap:8px }
+.controls { display:flex; flex-direction:column; gap:6px }
 .options { display:flex; gap:6px }
-.opt { flex:1; padding:6px; border-radius:8px; border:1px solid #cbd5e1; font-size:12px; text-align:center; cursor:pointer; background: white; font-weight: 600; }
+.opt { flex:1; padding:6px; border-radius:6px; border:1px solid #ddd; font-size:11px; text-align:center; cursor:pointer; background: #fff; font-weight: 600; }
 .opt.active { background: var(--green); color: white; border-color: var(--green); }
-.qty { display:flex; align-items:center; justify-content: space-between; background: #f1f5f9; border-radius: 8px; padding: 4px 8px; }
-.btn { background: var(--green); color: white; border:none; width: 28px; height: 28px; border-radius: 6px; font-size: 18px; font-weight: bold; }
-.count { font-weight: 700; color: var(--dark-green); }
+.qty { display:flex; align-items:center; justify-content: space-between; background: #f1f5f9; border-radius: 6px; padding: 4px 8px; }
+.btn { background: var(--green); color: white; border:none; width: 26px; height: 26px; border-radius: 4px; font-size: 16px; font-weight: bold; }
+.count { font-weight: 700; }
 
-/* FOOTER & BUTTONS */
+/* FLOATING FOOTER ACTIONS */
 .footer-actions { 
-    position:fixed; bottom:0; width:100%; background:white; padding:16px; 
+    position:fixed; bottom:0; left:0; right:0; width:100%; background:white; padding:12px 16px 24px; 
     box-shadow: 0 -4px 10px rgba(0,0,0,0.05); z-index: 1000;
 }
-.btn-primary { background: var(--green); color: white; padding: 14px; text-align: center; border-radius: 12px; font-weight: 700; cursor: pointer; border: none; width: 100%; font-size: 16px; }
-.btn-secondary { background: #f1f5f9; color: #475569; padding: 12px; text-align: center; border-radius: 12px; font-weight: 600; cursor: pointer; margin-top: 8px; font-size: 14px; }
+.btn-primary { background: var(--green); color: white; padding: 14px; text-align: center; border-radius: 10px; font-weight: 700; cursor: pointer; border: none; width: 100%; font-size: 16px; }
+.btn-secondary { background: #f1f5f9; color: #475569; padding: 10px; text-align: center; border-radius: 10px; font-weight: 600; cursor: pointer; margin-top: 8px; font-size: 13px; }
 
-/* TABLE & SUMMARY */
-.summary-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; border-radius: 12px; overflow: hidden; }
-.summary-table th { background: #f1f5f9; text-align: left; padding: 12px; font-size: 13px; }
-.summary-table td { padding: 12px; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
-.total-row { font-weight: 800; color: var(--dark-green); font-size: 18px; }
-.note { font-size: 12px; color: #64748b; font-style: italic; margin-top: 10px; text-align: center; }
+/* TABLE */
+.summary-table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; }
+.summary-table th { background: #f8fafc; text-align: left; padding: 10px; font-size: 12px; border-bottom: 2px solid #e2e8f0; }
+.summary-table td { padding: 10px; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+.total-row { font-weight: 800; color: var(--dark-green); font-size: 16px; background: #f0fdf4; }
 
-/* PAGES & FORMS */
-.hidden { display:none; }
-.page-title { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
-input, textarea { width: 100%; padding: 14px; margin: 8px 0; border-radius: 10px; border: 1px solid #cbd5e1; font-size: 16px; font-family: inherit; }
-input:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1); }
+.hidden { display:none !important; }
+input, textarea { width: 100%; padding: 12px; margin: 6px 0; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 16px; }
 
-/* RECEIPT */
-#receipt { background: white; padding: 24px; border: 2px dashed #ccc; border-radius: 16px; text-align: center; }
+/* RECEIPT AREA */
+#receipt { background: white; padding: 20px; border: 2px dashed #ccc; border-radius: 12px; margin-bottom: 15px; }
 </style>
 </head>
 <body>
@@ -91,7 +86,7 @@ input:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px r
 </div>
 
 <!-- PAGE 1: MENU -->
-<div id="mainPage" class="container">
+<div id="mainPage" class="container section">
     <div class="grid">
         <div class="card kesar">
             <img src="./images/Kesar.jpg">
@@ -144,68 +139,65 @@ input:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px r
             </div>
         </div>
     </div>
-</div>
-
-<div class="footer-actions" id="menuFooter">
-    <div class="btn-primary" onclick="goToSummary()">Review Order Checkout →</div>
+    
+    <div class="footer-actions">
+        <div class="btn-primary" onclick="navigateTo('summaryPage')">Review Order Checkout →</div>
+    </div>
 </div>
 
 <!-- PAGE 2: SUMMARY -->
-<div id="summaryPage" class="container hidden">
-    <div class="page-title">Order Checkout</div>
-    <p style="font-size:14px; color:#64748b">Please verify your selection</p>
-    
+<div id="summaryPage" class="container section hidden">
+    <h3>Order Checkout</h3>
     <table class="summary-table">
         <thead>
-            <tr><th>Variety</th><th>Qty</th><th>Total</th></tr>
+            <tr><th>Variety</th><th>Qty</th><th>Subtotal</th></tr>
         </thead>
         <tbody id="summaryRows"></tbody>
         <tfoot>
-            <tr class="total-row"><td colspan="2">Total Amount</td><td id="finalTotal">₹0</td></tr>
+            <tr class="total-row"><td colspan="2">Order Total</td><td id="finalTotal">₹0</td></tr>
         </tfoot>
     </table>
-    <p class="note">* Parcel charges at actuals will be charged additionally upon delivery.</p>
+    <p style="font-size: 11px; color: #64748b; text-align: center;">* Parcel charges at actuals will be charged additionally.</p>
 
     <div class="footer-actions">
-        <div class="btn-primary" onclick="goToDetails()">Confirm Order</div>
-        <div class="btn-secondary" onclick="goBack('mainPage')">Add More Items</div>
+        <div class="btn-primary" onclick="navigateTo('detailsPage')">Confirm Order</div>
+        <div class="btn-secondary" onclick="navigateTo('mainPage')">← Back to Menu</div>
     </div>
 </div>
 
 <!-- PAGE 3: DETAILS -->
-<div id="detailsPage" class="container hidden">
-    <div class="page-title">Delivery Details</div>
-    <p style="font-size:14px; color:#64748b">Required for Hyderabad Delivery</p>
+<div id="detailsPage" class="container section hidden">
+    <h3>Delivery Details</h3>
+    <p style="font-size:13px; color:#64748b; margin-bottom:15px">All fields are mandatory for delivery.</p>
     
-    <input id="userName" placeholder="Full Name (Required)">
-    <input id="userPhone" type="tel" placeholder="Phone Number (Required)">
-    <textarea id="userAddr" rows="3" placeholder="Full Delivery Address (Required)"></textarea>
+    <input id="userName" placeholder="Full Name">
+    <input id="userPhone" type="tel" placeholder="Phone Number">
+    <textarea id="userAddr" rows="3" placeholder="Full Address with Landmark"></textarea>
 
     <div class="footer-actions">
         <div class="btn-primary" onclick="placeOrder()">Confirm and Place Order</div>
-        <div class="btn-secondary" onclick="goBack('summaryPage')">Back to Summary</div>
+        <div class="btn-secondary" onclick="navigateTo('summaryPage')">← Back</div>
     </div>
 </div>
 
 <!-- PAGE 4: SUCCESS -->
-<div id="successPage" class="container hidden">
+<div id="successPage" class="container section hidden">
     <div id="receipt">
-        <h2 style="color:var(--green); margin-bottom: 4px;">Thank You!</h2>
-        <p style="margin-top:0; font-size: 14px;">Your order has been sent to the farm.</p>
+        <h2 style="color:var(--green); margin:0;">Thank You!</h2>
+        <p style="font-size: 13px; margin-bottom:15px;">We appreciate your support for local organic farming.</p>
         <div id="receiptTable"></div>
-        <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 12px 0;">
         <div id="receiptCust" style="text-align: left; font-size: 13px;"></div>
-        <p style="font-weight: bold; color: var(--green); margin-top: 15px;">Shout out to local farming!</p>
     </div>
-    <div class="btn-primary" onclick="downloadJPG()" style="margin-top: 20px;">Download Receipt (JPG)</div>
-    <div class="btn-secondary" onclick="location.reload()">Place Another Order</div>
+    <div class="btn-primary" onclick="downloadJPG()">Download Receipt (JPG)</div>
+    <div class="btn-secondary" onclick="location.reload()">Place New Order</div>
 </div>
 
 <script>
 let cart = {
- kesar:{count:1,size:3},
- banganapalli:{count:0,size:3},
- seeri:{count:0,size:3}
+ kesar:{name:'Premium Kesar', count:1, size:3},
+ banganapalli:{name:'Banganapalli', count:0, size:3},
+ seeri:{name:'Seeri', count:0, size:3}
 };
 
 const PRICE = 290;
@@ -223,34 +215,29 @@ function updateQty(item,val){
  document.getElementById(item).innerText=cart[item].count;
 }
 
-function goBack(id){
- document.querySelectorAll('.container').forEach(p => p.classList.add('hidden'));
- document.querySelectorAll('.footer-actions').forEach(f => f.classList.add('hidden'));
- document.getElementById(id).classList.remove('hidden');
- if(id === 'mainPage') document.getElementById('menuFooter').classList.remove('hidden');
- window.scrollTo(0,0);
-}
-
-function goToSummary(){
- let rows = ''; let total = 0; let hasItem = false;
- for(let item in cart){
-  if(cart[item].count > 0){
-    hasItem = true;
-    let kg = cart[item].count * cart[item].size;
-    let sub = kg * PRICE;
-    total += sub;
-    rows += `<tr><td>${item.toUpperCase()}</td><td>${kg} kg</td><td>₹${sub}</td></tr>`;
-  }
+function navigateTo(id){
+ // Hide all pages
+ document.querySelectorAll('.section').forEach(p => p.classList.add('hidden'));
+ 
+ if(id === 'summaryPage') {
+    let rows = ''; let total = 0; let hasItem = false;
+    for(let key in cart){
+        if(cart[key].count > 0){
+            hasItem = true;
+            let kg = cart[key].count * cart[key].size;
+            let sub = kg * PRICE;
+            total += sub;
+            rows += `<tr><td>${cart[key].name}</td><td>${kg}kg</td><td>₹${sub}</td></tr>`;
+        }
+    }
+    if(!hasItem){ alert("Please add some items first!"); navigateTo('mainPage'); return; }
+    document.getElementById('summaryRows').innerHTML = rows;
+    document.getElementById('finalTotal').innerText = `₹${total}`;
+    document.getElementById('receiptTable').innerHTML = `<table style="width:100%">${rows}</table><p><b>Total: ₹${total}</b></p>`;
  }
- if(!hasItem){ alert("Please add some mangoes!"); return; }
- document.getElementById('summaryRows').innerHTML = rows;
- document.getElementById('finalTotal').innerText = `₹${total}`;
- document.getElementById('receiptTable').innerHTML = `<table style="width:100%">${rows}</table><p><b>Total: ₹${total}</b></p>`;
- goBack('summaryPage');
-}
 
-function goToDetails(){
- goBack('detailsPage');
+ document.getElementById(id).classList.remove('hidden');
+ window.scrollTo(0,0);
 }
 
 async function placeOrder(){
@@ -258,26 +245,26 @@ async function placeOrder(){
  const phone = document.getElementById('userPhone').value.trim();
  const addr = document.getElementById('userAddr').value.trim();
 
- if(!name || !phone || !addr){ alert("All fields are mandatory!"); return; }
+ if(!name || !phone || !addr){ alert("Please fill all details!"); return; }
 
  document.getElementById('receiptCust').innerHTML = `<b>Deliver to:</b><br>${name}<br>${phone}<br>${addr}`;
 
- let msg = `🌳 *NEW ORGANIC ORDER*%0A%0A`;
- for(let item in cart){
-    if(cart[item].count > 0) msg += `• ${item.toUpperCase()}: ${cart[item].count * cart[item].size}kg%0A`;
+ let msg = `🌳 *NEW ORDER RECEIVED*%0A%0A`;
+ for(let key in cart){
+    if(cart[key].count > 0) msg += `• ${cart[key].name}: ${cart[key].count * cart[key].size}kg%0A`;
  }
- msg += `%0A👤 *Customer:* ${name}%0A📞 *Phone:* ${phone}%0A📍 *Addr:* ${addr}%0A%0A_Charges at actuals_`;
+ msg += `%0A👤 *Customer:* ${name}%0A📞 *Phone:* ${phone}%0A📍 *Addr:* ${addr}`;
 
  try {
     const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${msg}&parse_mode=Markdown`);
-    if(res.ok) goBack('successPage'); else alert("Bot Error. Check config.");
+    if(res.ok) navigateTo('successPage'); else alert("Telegram Error.");
  } catch(e) { alert("Network Error."); }
 }
 
 function downloadJPG(){
  html2canvas(document.querySelector("#receipt")).then(canvas => {
     let link = document.createElement('a');
-    link.download = 'SudhasFarm_Receipt.jpg';
+    link.download = 'SudhaFarms_Order.jpg';
     link.href = canvas.toDataURL("image/jpeg");
     link.click();
  });
