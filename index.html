@@ -7,265 +7,424 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 :root {
-    --sage: #4a6741;
-    --dark-forest: #2d3e26;
-    --muted-bg: #fcfdfb;
-    --border: #e2e8f0;
-    --text: #334155;
-    --accent-red: #991b1b;
+  --sage: #3B6D11;
+  --sage-light: #EAF3DE;
+  --sage-mid: #639922;
+  --forest: #173404;
+  --red: #A32D2D;
+  --red-light: #FCEBEB;
+  --gold: #BA7517;
+  --gold-light: #FAEEDA;
+  --border: #e2e8e0;
+  --bg: #ffffff;
+  --bg2: #f7f9f5;
+  --text: #1a2e0f;
+  --muted: #6b7f60;
 }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg2); color: var(--text); }
 
-body { 
-    margin: 0; 
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-    background: var(--muted-bg); 
-    color: var(--text);
-} 
+.phone { max-width: 390px; margin: 0 auto; background: var(--bg2); min-height: 100vh; position: relative; }
 
-.header { 
-    position: fixed; top: 0; width: 100%; height: 100px;
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                url('https://images.unsplash.com/photo-1591073113125-e46713c829ed?auto=format&fit=crop&q=80&w=800');
-    background-size: cover; background-position: center;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    color: white; text-align: center; z-index: 1000;
+.header {
+  background: var(--forest);
+  padding: 20px 20px 16px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
-.header .title { font-size: 20px; font-weight: 700; }
-.header .caption { font-size: 11px; opacity: 0.9; margin-top: 3px; font-style: italic; max-width: 80%; }
+.header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(255,255,255,0.02) 8px, rgba(255,255,255,0.02) 9px);
+}
+.farm-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.1);
+  border: 0.5px solid rgba(255,255,255,0.2);
+  border-radius: 20px; padding: 4px 12px; margin-bottom: 10px;
+  position: relative;
+}
+.farm-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #97C459; }
+.farm-badge span { font-size: 11px; color: rgba(255,255,255,0.8); letter-spacing: 0.5px; text-transform: uppercase; }
+.header h1 { font-size: 22px; font-weight: 600; color: #fff; margin: 0 0 4px; position: relative; }
+.header p { font-size: 11px; color: rgba(255,255,255,0.55); margin: 0; font-style: italic; line-height: 1.4; position: relative; }
 
-.container { padding: 115px 16px 140px; max-width: 500px; margin: 0 auto; min-height: 100vh; }
-.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.card { background: #fff; border-radius: 12px; padding: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border: 1px solid var(--border); }
-.card img { width: 100%; border-radius: 8px; object-fit: cover; height: 100px; }
-.card h4 { margin: 8px 0 2px; font-size: 14px; color: var(--dark-forest); }
-.price-tag { color: var(--accent-red); font-weight: 600; font-size: 12px; margin-bottom: 10px; opacity: 0.8; }
-.kesar { grid-column: span 2; }
-.kesar img { height: 150px; }
+.content { padding: 20px 16px 110px; }
 
-.controls { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
-.options { display: flex; gap: 5px; }
-.opt { padding: 5px 12px; border-radius: 6px; border: 1px solid #ddd; font-size: 11px; font-weight: 600; cursor: pointer; background: #fff; color: #666; }
-.opt.active { background: var(--sage); color: white; border-color: var(--sage); }
+.section-label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; margin: 0 0 12px; }
 
-.qty { display: flex; align-items: center; gap: 12px; background: #f8fafc; border-radius: 6px; padding: 3px 6px; border: 1px solid #edf2f7; }
-.btn-qty { background: #e2e8f0; color: #475569; border: none; width: 24px; height: 24px; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; }
-.count { font-weight: 700; font-size: 14px; min-width: 15px; text-align: center; }
+.product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+.product-card { background: var(--bg); border: 0.5px solid var(--border); border-radius: 14px; overflow: hidden; }
+.product-card.featured { grid-column: span 2; }
+.product-thumb { width: 100%; object-fit: cover; display: block; }
+.product-card.featured .product-thumb { height: 130px; }
+.product-card:not(.featured) .product-thumb { height: 90px; }
+.product-body { padding: 10px 12px 12px; }
+.product-name { font-size: 14px; font-weight: 600; color: var(--text); margin: 0 0 3px; }
+.product-price { font-size: 12px; color: var(--red); margin: 0 0 10px; font-weight: 500; }
 
-.footer-actions { position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 15px 20px 30px; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); z-index: 1000; }
-.btn-primary { background: var(--sage); color: white; padding: 14px; text-align: center; border-radius: 10px; font-weight: 600; cursor: pointer; border: none; width: 100%; font-size: 15px; }
-.btn-secondary { background: #f1f5f9; color: #64748b; padding: 10px; text-align: center; border-radius: 10px; font-weight: 600; cursor: pointer; margin-top: 8px; font-size: 13px; border: none; width: 100%; display: block; }
+.size-row { display: flex; gap: 5px; margin-bottom: 8px; }
+.size-btn {
+  padding: 4px 10px; border-radius: 6px;
+  border: 0.5px solid var(--border); font-size: 11px; font-weight: 600;
+  cursor: pointer; background: var(--bg2); color: var(--muted); transition: all 0.15s;
+}
+.size-btn.active { background: var(--sage); color: #fff; border-color: var(--sage); }
 
-.summary-table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; }
-.summary-table th { text-align: left; padding: 10px; font-size: 12px; color: #94a3b8; border-bottom: 1px solid #eee; }
-.summary-table td { padding: 12px 10px; border-bottom: 1px solid #f8fafc; font-size: 14px; }
-.total-row { font-weight: 700; color: var(--dark-forest); background: #fdfdfd; }
+.qty-row {
+  display: flex; align-items: center;
+  background: var(--bg2); border: 0.5px solid var(--border);
+  border-radius: 8px; width: fit-content;
+}
+.qty-btn {
+  width: 30px; height: 28px; border: none; background: transparent;
+  color: var(--text); font-size: 16px; font-weight: 500; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.qty-count { font-size: 13px; font-weight: 600; min-width: 24px; text-align: center; color: var(--text); }
+.qty-divider { width: 0.5px; height: 18px; background: var(--border); }
 
-.hidden { display: none !important; }
-input, textarea { width: 100%; padding: 12px; margin: 6px 0; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 16px; outline-color: var(--sage); }
+.footer-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  max-width: 390px; margin: 0 auto;
+  background: var(--bg);
+  border-top: 0.5px solid var(--border);
+  padding: 12px 16px 28px;
+}
+.total-row-footer { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.total-label { font-size: 12px; color: var(--muted); }
+.total-amount { font-size: 18px; font-weight: 600; color: var(--text); }
+.btn-main {
+  background: var(--sage); color: #fff; border: none;
+  border-radius: 12px; padding: 13px; width: 100%;
+  font-size: 15px; font-weight: 600; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.btn-main:active { opacity: 0.85; }
+.btn-sub {
+  background: transparent; color: var(--muted); border: none;
+  border-radius: 10px; padding: 8px; width: 100%;
+  font-size: 13px; cursor: pointer; margin-top: 4px;
+}
 
-#receipt { background: white; padding: 25px; border: 1px solid #eee; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 15px; }
-.delivery-label { font-weight: 700; color: #64748b; display: inline-block; width: 80px; }
+.page { display: none; }
+.page.active { display: block; }
+
+.order-review { background: var(--bg); border: 0.5px solid var(--border); border-radius: 14px; overflow: hidden; margin-bottom: 14px; }
+.order-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; border-bottom: 0.5px solid var(--border); }
+.order-row:last-child { border-bottom: none; }
+.order-item-name { font-size: 14px; color: var(--text); }
+.order-item-detail { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.order-item-price { font-size: 14px; font-weight: 600; color: var(--text); }
+
+.total-card {
+  background: var(--sage-light); border: 0.5px solid #C0DD97;
+  border-radius: 12px; padding: 14px 16px; margin-bottom: 8px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.total-card-label { font-size: 13px; color: var(--sage); font-weight: 600; }
+.total-card-amount { font-size: 20px; font-weight: 600; color: var(--forest); }
+
+.note-card {
+  background: var(--gold-light); border: 0.5px solid #FAC775;
+  border-radius: 10px; padding: 10px 12px;
+  font-size: 11px; color: var(--gold); line-height: 1.5; margin-bottom: 16px;
+}
+
+.form-group { margin-bottom: 14px; }
+.form-label { font-size: 11px; font-weight: 600; color: var(--muted); margin-bottom: 5px; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
+.form-input {
+  width: 100%; padding: 11px 13px; border-radius: 10px;
+  border: 0.5px solid var(--border); background: var(--bg);
+  color: var(--text); font-size: 15px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  outline: none;
+}
+.form-input:focus { border-color: var(--sage); box-shadow: 0 0 0 3px rgba(59,109,17,0.1); }
+
+.success-icon {
+  width: 52px; height: 52px; background: var(--sage-light);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px; border: 0.5px solid #C0DD97;
+}
+
+.receipt-card { background: var(--bg); border: 0.5px solid var(--border); border-radius: 14px; padding: 18px; margin-bottom: 16px; }
+.receipt-header { text-align: center; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 0.5px solid var(--border); }
+.receipt-title { font-size: 16px; font-weight: 600; color: var(--text); margin: 0 0 4px; }
+.receipt-sub { font-size: 12px; color: var(--muted); margin: 0; }
+.receipt-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 0.5px solid var(--border); font-size: 13px; }
+.receipt-row:last-child { border-bottom: none; }
+.receipt-label { color: var(--muted); }
+.receipt-value { color: var(--text); font-weight: 500; text-align: right; max-width: 55%; }
+
+.page-title { font-size: 18px; font-weight: 600; color: var(--text); margin: 0 0 4px; }
+.page-sub { font-size: 13px; color: var(--muted); margin: 0 0 20px; }
 </style>
 </head>
 <body>
 
-<div class="header">
-    <div class="title">Sudha's Organic Farm</div>
-    <div class="caption">"Nurtured by Nature, Ripened by the Sun, Delivered with Love"</div>
-</div>
+<div class="phone">
+  <div class="header">
+    <div class="farm-badge"><div class="farm-badge-dot"></div><span>Organic Farm</span></div>
+    <h1>Sudha's Mangoes</h1>
+    <p>Nurtured by nature, ripened by the sun, delivered with love</p>
+  </div>
 
-<!-- PAGE 1: MENU -->
-<div id="mainPage" class="container section">
-    <div class="grid">
-        <div class="card kesar">
-            <img src="./images/Kesar.jpg">
-            <h4>Premium Kesar</h4>
-            <div class="price-tag">₹290 per kg</div>
-            <div class="controls">
-                <div class="options">
-                    <div class="opt active" onclick="selectSize('kesar',3,this)">3 kg</div>
-                    <div class="opt" onclick="selectSize('kesar',5,this)">5 kg</div>
-                </div>
-                <div class="qty">
-                    <button class="btn-qty" onclick="updateQty('kesar', -1)">-</button>
-                    <span id="kesar" class="count">1</span>
-                    <button class="btn-qty" onclick="updateQty('kesar', 1)">+</button>
-                </div>
+  <!-- PAGE 1: MENU -->
+  <div id="page-menu" class="page active">
+    <div class="content">
+      <p class="section-label">Available Varieties</p>
+      <div class="product-grid">
+
+        <div class="product-card featured">
+          <img class="product-thumb" src="./images/Kesar.jpg" onerror="this.style.background='#C0DD97';this.style.height='130px';this.removeAttribute('src')">
+          <div class="product-body">
+            <p class="product-name">Premium Kesar</p>
+            <p class="product-price">₹290 per kg</p>
+            <div class="size-row">
+              <button class="size-btn active" onclick="selectSize('kesar',3,this)">3 kg</button>
+              <button class="size-btn" onclick="selectSize('kesar',5,this)">5 kg</button>
             </div>
+            <div class="qty-row">
+              <button class="qty-btn" onclick="updateQty('kesar',-1)">−</button>
+              <div class="qty-divider"></div>
+              <span class="qty-count" id="kesar">1</span>
+              <div class="qty-divider"></div>
+              <button class="qty-btn" onclick="updateQty('kesar',1)">+</button>
+            </div>
+          </div>
         </div>
 
-        <div class="card">
-            <img src="./images/Banganapalli.jpg">
-            <h4>Banganapalli</h4>
-            <div class="price-tag">₹290 per kg</div>
-            <div class="controls">
-                <div class="options">
-                    <div class="opt active" onclick="selectSize('banganapalli',3,this)">3 kg</div>
-                    <div class="opt" onclick="selectSize('banganapalli',5,this)">5 kg</div>
-                </div>
-                <div class="qty">
-                    <button class="btn-qty" onclick="updateQty('banganapalli', -1)">-</button>
-                    <span id="banganapalli" class="count">0</span>
-                    <button class="btn-qty" onclick="updateQty('banganapalli', 1)">+</button>
-                </div>
+        <div class="product-card">
+          <img class="product-thumb" src="./images/Banganapalli.jpg" onerror="this.style.background='#FAC775';this.style.height='90px';this.removeAttribute('src')">
+          <div class="product-body">
+            <p class="product-name">Banganapalli</p>
+            <p class="product-price">₹290 per kg</p>
+            <div class="size-row">
+              <button class="size-btn active" onclick="selectSize('banganapalli',3,this)">3 kg</button>
+              <button class="size-btn" onclick="selectSize('banganapalli',5,this)">5 kg</button>
             </div>
+            <div class="qty-row">
+              <button class="qty-btn" onclick="updateQty('banganapalli',-1)">−</button>
+              <div class="qty-divider"></div>
+              <span class="qty-count" id="banganapalli">0</span>
+              <div class="qty-divider"></div>
+              <button class="qty-btn" onclick="updateQty('banganapalli',1)">+</button>
+            </div>
+          </div>
         </div>
 
-        <div class="card">
-            <img src="./images/Seeri.jpg">
-            <h4>Seeri</h4>
-            <div class="price-tag">₹290 per kg</div>
-            <div class="controls">
-                <div class="options">
-                    <div class="opt active" onclick="selectSize('seeri',3,this)">3 kg</div>
-                    <div class="opt" onclick="selectSize('seeri',5,this)">5 kg</div>
-                </div>
-                <div class="qty">
-                    <button class="btn-qty" onclick="updateQty('seeri', -1)">-</button>
-                    <span id="seeri" class="count">0</span>
-                    <button class="btn-qty" onclick="updateQty('seeri', 1)">+</button>
-                </div>
+        <div class="product-card">
+          <img class="product-thumb" src="./images/Seeri.jpg" onerror="this.style.background='#B5D4F4';this.style.height='90px';this.removeAttribute('src')">
+          <div class="product-body">
+            <p class="product-name">Seeri</p>
+            <p class="product-price">₹290 per kg</p>
+            <div class="size-row">
+              <button class="size-btn active" onclick="selectSize('seeri',3,this)">3 kg</button>
+              <button class="size-btn" onclick="selectSize('seeri',5,this)">5 kg</button>
             </div>
+            <div class="qty-row">
+              <button class="qty-btn" onclick="updateQty('seeri',-1)">−</button>
+              <div class="qty-divider"></div>
+              <span class="qty-count" id="seeri">0</span>
+              <div class="qty-divider"></div>
+              <button class="qty-btn" onclick="updateQty('seeri',1)">+</button>
+            </div>
+          </div>
         </div>
-    </div>
-    
-    <div class="footer-actions">
-        <div class="btn-primary" onclick="navigateTo('summaryPage')">Review Order →</div>
-    </div>
-</div>
 
-<!-- PAGE 2: SUMMARY -->
-<div id="summaryPage" class="container section hidden">
-    <h3 style="margin-top:0">Order Checkout</h3>
-    <table class="summary-table">
-        <thead>
-            <tr><th>Variety</th><th>Qty</th><th>Subtotal</th></tr>
-        </thead>
-        <tbody id="summaryRows"></tbody>
-        <tfoot>
-            <tr class="total-row"><td colspan="2">Order Total</td><td id="finalTotal">₹0</td></tr>
-        </tfoot>
-    </table>
-    <p style="font-size: 11px; color: #94a3b8; text-align: center; margin-top: 20px;">* Parcel charges at actuals will be charged additionally upon delivery.</p>
-
-    <div class="footer-actions">
-        <!-- FIXED: Now goes to detailsPage -->
-        <div class="btn-primary" onclick="navigateTo('detailsPage')">Confirm Order</div>
-        <div class="btn-secondary" onclick="navigateTo('mainPage')">Add More Items</div>
+      </div>
     </div>
-</div>
-
-<!-- PAGE 3: DETAILS -->
-<div id="detailsPage" class="container section hidden">
-    <h3 style="margin-top:0">Delivery Details</h3>
-    <p style="font-size:13px; color:#94a3b8; margin-bottom:20px">Please provide delivery info for Hyderabad.</p>
-    
-    <input id="userName" placeholder="Full Name">
-    <input id="userPhone" type="tel" placeholder="Contact Number">
-    <textarea id="userAddr" rows="3" placeholder="Full Address (House No, Street, Area)"></textarea>
-
-    <div class="footer-actions">
-        <div class="btn-primary" onclick="placeOrder()">Place Order</div>
-        <div class="btn-secondary" onclick="navigateTo('summaryPage')">Back to Summary</div>
+    <div class="footer-bar">
+      <div class="total-row-footer">
+        <span class="total-label">Estimated total</span>
+        <span class="total-amount" id="footer-total">₹0</span>
+      </div>
+      <button class="btn-main" onclick="goToSummary()">Review order →</button>
     </div>
-</div>
+  </div>
 
-<!-- PAGE 4: SUCCESS -->
-<div id="successPage" class="container section hidden">
-    <div id="receipt">
-        <h2 style="color:var(--sage); margin:0 0 10px 0;">Order Confirmed!</h2>
-        <p style="font-size: 13px; color:#666; margin-bottom:20px;">Your handpicked mangoes are on the way!</p>
-        <div id="receiptTable"></div>
-        <hr style="border: 0; border-top: 1px solid #f1f5f9; margin: 15px 0;">
-        <div id="receiptCust" style="text-align: left; font-size: 14px; line-height: 1.6;"></div>
+  <!-- PAGE 2: SUMMARY -->
+  <div id="page-summary" class="page">
+    <div class="content">
+      <p class="page-title">Order summary</p>
+      <p class="page-sub">Review your selection before checkout</p>
+      <div class="order-review" id="summaryRows"></div>
+      <div class="total-card">
+        <span class="total-card-label">Order total</span>
+        <span class="total-card-amount" id="finalTotal">₹0</span>
+      </div>
+      <div class="note-card">Parcel charges at actuals will be added upon delivery.</div>
     </div>
-    <div class="btn-primary" onclick="downloadJPG()">Download Receipt (JPG)</div>
-    <div class="btn-secondary" onclick="location.reload()">Place New Order</div>
+    <div class="footer-bar">
+      <button class="btn-main" onclick="showPage('page-details')">Confirm & continue →</button>
+      <button class="btn-sub" onclick="showPage('page-menu')">← Edit order</button>
+    </div>
+  </div>
+
+  <!-- PAGE 3: DETAILS -->
+  <div id="page-details" class="page">
+    <div class="content">
+      <p class="page-title">Delivery details</p>
+      <p class="page-sub">For delivery within Hyderabad</p>
+      <div class="form-group">
+        <label class="form-label">Full name</label>
+        <input class="form-input" id="userName" placeholder="Your name" type="text">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Contact number</label>
+        <input class="form-input" id="userPhone" placeholder="+91 00000 00000" type="tel">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Delivery address</label>
+        <textarea class="form-input" id="userAddr" rows="3" placeholder="House no, street, area, landmark…"></textarea>
+      </div>
+    </div>
+    <div class="footer-bar">
+      <button class="btn-main" onclick="placeOrder()">Place order →</button>
+      <button class="btn-sub" onclick="showPage('page-summary')">← Back to summary</button>
+    </div>
+  </div>
+
+  <!-- PAGE 4: SUCCESS -->
+  <div id="page-success" class="page">
+    <div class="content" style="padding-top: 32px;">
+      <div class="success-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3B6D11" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <div style="text-align:center; margin-bottom: 24px;">
+        <p class="page-title" style="text-align:center;">Order confirmed!</p>
+        <p class="page-sub" style="text-align:center; margin:0;">Your mangoes are on their way</p>
+      </div>
+      <div class="receipt-card" id="receipt">
+        <div class="receipt-header">
+          <p class="receipt-title">Sudha's Organic Farm</p>
+          <p class="receipt-sub" id="receipt-date">Order receipt</p>
+        </div>
+        <div id="receiptItems"></div>
+        <div id="receiptCust"></div>
+      </div>
+      <button class="btn-main" onclick="downloadJPG()" style="margin-bottom:8px;">Download receipt</button>
+      <button class="btn-sub" onclick="location.reload()">Place a new order</button>
+    </div>
+  </div>
+
 </div>
 
 <script>
-let cart = {
- kesar:{name:'Premium Kesar', count:1, size:3},
- banganapalli:{name:'Banganapalli', count:0, size:3},
- seeri:{name:'Seeri', count:0, size:3}
-};
 
 const PRICE = 290;
 const BOT_TOKEN = "8712573597:AAEHK2ykhiLhFTJrPIVIfFgJ5uqpkoTgsWA"; 
 const CHAT_ID = "-1003967477361";
 
-function selectSize(item,size,el){
- cart[item].size=size;
- [...el.parentNode.children].forEach(s => s.classList.remove('active'));
- el.classList.add('active');
+let cart = {
+  kesar:        { name: 'Premium Kesar',  count: 1, size: 3 },
+  banganapalli: { name: 'Banganapalli',   count: 0, size: 3 },
+  seeri:        { name: 'Seeri',          count: 0, size: 3 }
+};
+
+function selectSize(item, size, el) {
+  cart[item].size = size;
+  [...el.parentNode.children].forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+  updateFooterTotal();
 }
 
-function updateQty(item,val){
- cart[item].count = Math.max(0, cart[item].count + val);
- document.getElementById(item).innerText = cart[item].count;
+function updateQty(item, val) {
+  cart[item].count = Math.max(0, cart[item].count + val);
+  document.getElementById(item).innerText = cart[item].count;
+  updateFooterTotal();
 }
 
-function navigateTo(id){
- // Hide all sections
- document.querySelectorAll('.section').forEach(p => p.classList.add('hidden'));
- 
- if(id === 'summaryPage') {
-    let rows = ''; let total = 0; let hasItem = false;
-    for(let key in cart){
-        if(cart[key].count > 0){
-            hasItem = true;
-            let kg = cart[key].count * cart[key].size;
-            let sub = kg * PRICE;
-            total += sub;
-            rows += `<tr><td>${cart[key].name}</td><td>${kg}kg</td><td>₹${sub}</td></tr>`;
-        }
+function updateFooterTotal() {
+  let total = 0;
+  for (let k in cart) if (cart[k].count > 0) total += cart[k].count * cart[k].size * PRICE;
+  document.getElementById('footer-total').innerText = total > 0 ? '₹' + total.toLocaleString('en-IN') : '₹0';
+}
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function goToSummary() {
+  let rows = ''; let total = 0; let hasItem = false;
+  let receiptItems = '';
+  for (let k in cart) {
+    if (cart[k].count > 0) {
+      hasItem = true;
+      const kg = cart[k].count * cart[k].size;
+      const sub = kg * PRICE;
+      total += sub;
+      rows += `<div class="order-row">
+        <div>
+          <div class="order-item-name">${cart[k].name}</div>
+          <div class="order-item-detail">${cart[k].count} box × ${cart[k].size} kg = ${kg} kg</div>
+        </div>
+        <div class="order-item-price">₹${sub.toLocaleString('en-IN')}</div>
+      </div>`;
+      receiptItems += `<div class="receipt-row">
+        <span class="receipt-label">${cart[k].name} (${kg}kg)</span>
+        <span class="receipt-value">₹${sub.toLocaleString('en-IN')}</span>
+      </div>`;
     }
-    if(!hasItem){ alert("Please add at least one item."); navigateTo('mainPage'); return; }
-    document.getElementById('summaryRows').innerHTML = rows;
-    document.getElementById('finalTotal').innerText = `₹${total}`;
-    document.getElementById('receiptTable').innerHTML = `<table style="width:100%">${rows}</table><p style="margin-top:10px"><b>Total: ₹${total}</b></p>`;
- }
-
- // Show target section
- document.getElementById(id).classList.remove('hidden');
- window.scrollTo(0,0);
+  }
+  if (!hasItem) { alert('Please add at least one item.'); return; }
+  rows += `<div class="order-row" style="background:var(--bg2)">
+    <div class="order-item-name" style="font-weight:600">Total</div>
+    <div class="order-item-price" style="font-size:15px">₹${total.toLocaleString('en-IN')}</div>
+  </div>`;
+  document.getElementById('summaryRows').innerHTML = rows;
+  document.getElementById('finalTotal').innerText = '₹' + total.toLocaleString('en-IN');
+  document.getElementById('receiptItems').innerHTML = receiptItems + `<div class="receipt-row">
+    <span class="receipt-label" style="font-weight:600">Total</span>
+    <span class="receipt-value" style="color:var(--forest);font-weight:600">₹${total.toLocaleString('en-IN')}</span>
+  </div>`;
+  showPage('page-summary');
 }
 
-async function placeOrder(){
- const name = document.getElementById('userName').value.trim();
- const phone = document.getElementById('userPhone').value.trim();
- const addr = document.getElementById('userAddr').value.trim();
+async function placeOrder() {
+  const name  = document.getElementById('userName').value.trim();
+  const phone = document.getElementById('userPhone').value.trim();
+  const addr  = document.getElementById('userAddr').value.trim();
+  if (!name || !phone || !addr) { alert('All fields are required.'); return; }
 
- if(!name || !phone || !addr){ alert("All fields are mandatory!"); return; }
+  const now = new Date();
+  document.getElementById('receipt-date').innerText = now.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
 
- // Set up receipt content
- document.getElementById('receiptCust').innerHTML = `
-    <div><span class="delivery-label">Name</span>: ${name}</div>
-    <div><span class="delivery-label">Contact</span>: ${phone}</div>
-    <div><span class="delivery-label">Address</span>: ${addr}</div>
- `;
+  document.getElementById('receiptCust').innerHTML = `
+    <div class="receipt-row"><span class="receipt-label">Name</span><span class="receipt-value">${name}</span></div>
+    <div class="receipt-row"><span class="receipt-label">Contact</span><span class="receipt-value">${phone}</span></div>
+    <div class="receipt-row"><span class="receipt-label">Address</span><span class="receipt-value">${addr}</span></div>
+  `;
 
- let msg = `🌳 *SUDHA FARMS ORDER*%0A%0A`;
- for(let key in cart){
-    if(cart[key].count > 0) msg += `• ${cart[key].name}: ${cart[key].count * cart[key].size}kg%0A`;
- }
- msg += `%0A👤 *Name:* ${name}%0A📞 *Contact:* ${phone}%0A📍 *Address:* ${addr}`;
+  let msg = `🌳 *SUDHA FARMS ORDER*%0A%0A`;
+  for (let k in cart) {
+    if (cart[k].count > 0) msg += `• ${cart[k].name}: ${cart[k].count * cart[k].size}kg%0A`;
+  }
+  msg += `%0A👤 *Name:* ${name}%0A📞 *Contact:* ${phone}%0A📍 *Address:* ${addr}`;
 
- try {
+  try {
     const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${msg}&parse_mode=Markdown`);
-    if(res.ok) navigateTo('successPage'); else alert("Submission Error. Check Bot/Chat IDs.");
- } catch(e) { alert("Network Error."); }
+    if (res.ok) showPage('page-success');
+    else alert('Submission error. Please check your Bot/Chat IDs.');
+  } catch (e) { alert('Network error. Please try again.'); }
 }
 
-function downloadJPG(){
- html2canvas(document.querySelector("#receipt"), { scale: 2 }).then(canvas => {
-    let link = document.createElement('a');
-    link.download = 'SudhaFarms_Order.jpg';
-    link.href = canvas.toDataURL("image/jpeg");
+function downloadJPG() {
+  html2canvas(document.querySelector('#receipt'), { scale: 2 }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = 'SudhaFarms_Receipt.jpg';
+    link.href = canvas.toDataURL('image/jpeg');
     link.click();
- });
+  });
 }
+
+updateFooterTotal();
 </script>
 </body>
 </html>
