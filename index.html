@@ -3,134 +3,202 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Sudha Farms</title>
+<title>Sudha's Organic Farm</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
-:root{--green:#16a34a;--light:#f5f5f5;--card:#ffffff;--text:#222}
-*{box-sizing:border-box}
-body { margin:0; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto; background:var(--light); color:var(--text);} 
-.header { position:fixed; top:0; width:100%; background:#fff; padding:12px; box-shadow:0 2px 8px rgba(0,0,0,0.08); z-index:1000; }
-.title { font-size:18px; font-weight:700; }
-.subtitle { color:var(--green); font-size:12px; margin-top:2px }
-.container { padding:80px 12px 80px; }
-.grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.card { background:var(--card); border-radius:14px; padding:10px; box-shadow:0 2px 6px rgba(0,0,0,0.06); }
-.card img { width:100%; border-radius:10px; object-fit:cover; height:130px; }
-.card h4 { margin:6px 0 4px; font-size:14px; }
+:root{
+    --green: #16a34a;
+    --dark-green: #065f46;
+    --light: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+    --price-color: #b91c1c;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
 
-.controls { display:flex; flex-direction:column; align-items:flex-start; gap:6px }
-.options { display:flex; gap:6px }
-.opt { padding:6px 10px; border-radius:8px; border:1px solid #ddd; font-size:12px; cursor:pointer }
-.opt.active { background:var(--green); color:#fff; border:none }
-.qty { display:flex; align-items:center; gap:10px }
-.btn { background:#eee; border:none; padding:6px 10px; border-radius:6px; font-size:14px }
-.count { font-weight:600; min-width:20px; text-align:center }
+body { 
+    margin:0; 
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+    background: var(--light); 
+    color: var(--text);
+    line-height: 1.4;
+} 
 
+/* HEADER WITH BACKGROUND */
+.header { 
+    position:fixed; top:0; width:100%; height: 160px;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                url('https://images.unsplash.com/photo-1591073113125-e46713c829ed?auto=format&fit=crop&q=80&w=800');
+    background-size: cover;
+    background-position: center;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: white; text-align: center; z-index: 1000;
+}
+.header .title { font-size: 24px; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+.header .caption { font-size: 14px; font-style: italic; opacity: 0.9; margin-top: 4px; }
+
+/* SPACING TO AVOID OVERLAP */
+.container { padding: 180px 16px 120px; max-width: 600px; margin: 0 auto; }
+
+/* GRID & CARDS */
+.grid { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+.card { background: var(--card); border-radius: 16px; padding: 10px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; }
+.card img { width:100%; border-radius:12px; object-fit:cover; height:120px; }
+.card h4 { margin: 8px 0 2px; font-size: 15px; font-weight: 700; }
+.price-tag { color: var(--price-color); font-weight: 700; font-size: 13px; margin-bottom: 8px; }
 .kesar { grid-column: span 2; }
+.kesar img { height: 180px; }
+
+/* CONTROLS */
+.controls { display:flex; flex-direction:column; gap:8px }
+.options { display:flex; gap:6px }
+.opt { flex:1; padding:6px; border-radius:8px; border:1px solid #cbd5e1; font-size:12px; text-align:center; cursor:pointer; background: white; font-weight: 600; }
+.opt.active { background: var(--green); color: white; border-color: var(--green); }
+.qty { display:flex; align-items:center; justify-content: space-between; background: #f1f5f9; border-radius: 8px; padding: 4px 8px; }
+.btn { background: var(--green); color: white; border:none; width: 28px; height: 28px; border-radius: 6px; font-size: 18px; font-weight: bold; }
+.count { font-weight: 700; color: var(--dark-green); }
+
+/* FOOTER & BUTTONS */
+.footer-actions { 
+    position:fixed; bottom:0; width:100%; background:white; padding:16px; 
+    box-shadow: 0 -4px 10px rgba(0,0,0,0.05); z-index: 1000;
+}
+.btn-primary { background: var(--green); color: white; padding: 14px; text-align: center; border-radius: 12px; font-weight: 700; cursor: pointer; border: none; width: 100%; font-size: 16px; }
+.btn-secondary { background: #f1f5f9; color: #475569; padding: 12px; text-align: center; border-radius: 12px; font-weight: 600; cursor: pointer; margin-top: 8px; font-size: 14px; }
+
+/* TABLE & SUMMARY */
+.summary-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; border-radius: 12px; overflow: hidden; }
+.summary-table th { background: #f1f5f9; text-align: left; padding: 12px; font-size: 13px; }
+.summary-table td { padding: 12px; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+.total-row { font-weight: 800; color: var(--dark-green); font-size: 18px; }
+.note { font-size: 12px; color: #64748b; font-style: italic; margin-top: 10px; text-align: center; }
+
+/* PAGES & FORMS */
 .hidden { display:none; }
-.page { padding:20px; }
-input, textarea { width:100%; padding:12px; margin:10px 0; border-radius:8px; border:1px solid #ddd }
+.page-title { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+input, textarea { width: 100%; padding: 14px; margin: 8px 0; border-radius: 10px; border: 1px solid #cbd5e1; font-size: 16px; font-family: inherit; }
+input:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1); }
 
-.footer { position:fixed; bottom:0; width:100%; background:#fff; padding:10px; box-shadow:0 -2px 8px rgba(0,0,0,0.08); }
-.checkout { background:var(--green); color:#fff; padding:12px; text-align:center; border-radius:10px; font-weight:600; cursor:pointer; }
-.btn-back { background:#666; color:#fff; padding:12px; text-align:center; border-radius:10px; font-weight:600; cursor:pointer; margin-top:10px; }
-
-/* Receipt Styling */
-#receiptArea { background: white; padding: 20px; border: 2px dashed #ddd; border-radius: 10px; margin-bottom: 20px; }
+/* RECEIPT */
+#receipt { background: white; padding: 24px; border: 2px dashed #ccc; border-radius: 16px; text-align: center; }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="title">Sudha Farms</div>
-  <div class="subtitle">Delivery only in Hyderabad</div>
+    <div class="title">Sudha's Organic Farm</div>
+    <div class="caption">"Handpicked Gold from Our Trees to Your Table"</div>
 </div>
 
-<!-- PAGE 1: MAIN MENU -->
+<!-- PAGE 1: MENU -->
 <div id="mainPage" class="container">
-  <div class="grid">
-    <div class="card kesar">
-      <img src="./images/Kesar.jpg">
-      <h4>Kesar</h4>
-      <div class="controls">
-        <div class="options">
-          <div class="opt active" onclick="selectSize('kesar',3,this)">3 kg</div>
-          <div class="opt" onclick="selectSize('kesar',5,this)">5 kg</div>
+    <div class="grid">
+        <div class="card kesar">
+            <img src="./images/Kesar.jpg">
+            <h4>Premium Kesar</h4>
+            <div class="price-tag">₹290 per kg</div>
+            <div class="controls">
+                <div class="options">
+                    <div class="opt active" onclick="selectSize('kesar',3,this)">3 kg</div>
+                    <div class="opt" onclick="selectSize('kesar',5,this)">5 kg</div>
+                </div>
+                <div class="qty">
+                    <button class="btn" onclick="updateQty('kesar', -1)">-</button>
+                    <span id="kesar" class="count">1</span>
+                    <button class="btn" onclick="updateQty('kesar', 1)">+</button>
+                </div>
+            </div>
         </div>
-        <div class="qty">
-          <button class="btn" onclick="updateQty('kesar', -1)">-</button>
-          <span id="kesar" class="count">1</span>
-          <button class="btn" onclick="updateQty('kesar', 1)">+</button>
-        </div>
-      </div>
-    </div>
 
-    <div class="card">
-      <img src="./images/Banganapalli.jpg">
-      <h4>Banganapalli</h4>
-      <div class="controls">
-        <div class="options">
-          <div class="opt active" onclick="selectSize('banganapalli',3,this)">3 kg</div>
-          <div class="opt" onclick="selectSize('banganapalli',5,this)">5 kg</div>
+        <div class="card">
+            <img src="./images/Banganapalli.jpg">
+            <h4>Banganapalli</h4>
+            <div class="price-tag">₹290 per kg</div>
+            <div class="controls">
+                <div class="options">
+                    <div class="opt active" onclick="selectSize('banganapalli',3,this)">3 kg</div>
+                    <div class="opt" onclick="selectSize('banganapalli',5,this)">5 kg</div>
+                </div>
+                <div class="qty">
+                    <button class="btn" onclick="updateQty('banganapalli', -1)">-</button>
+                    <span id="banganapalli" class="count">0</span>
+                    <button class="btn" onclick="updateQty('banganapalli', 1)">+</button>
+                </div>
+            </div>
         </div>
-        <div class="qty">
-          <button class="btn" onclick="updateQty('banganapalli', -1)">-</button>
-          <span id="banganapalli" class="count">0</span>
-          <button class="btn" onclick="updateQty('banganapalli', 1)">+</button>
-        </div>
-      </div>
-    </div>
 
-    <div class="card">
-      <img src="./images/Seeri.jpg">
-      <h4>Seeri</h4>
-      <div class="controls">
-        <div class="options">
-          <div class="opt active" onclick="selectSize('seeri',3,this)">3 kg</div>
-          <div class="opt" onclick="selectSize('seeri',5,this)">5 kg</div>
+        <div class="card">
+            <img src="./images/Seeri.jpg">
+            <h4>Seeri</h4>
+            <div class="price-tag">₹290 per kg</div>
+            <div class="controls">
+                <div class="options">
+                    <div class="opt active" onclick="selectSize('seeri',3,this)">3 kg</div>
+                    <div class="opt" onclick="selectSize('seeri',5,this)">5 kg</div>
+                </div>
+                <div class="qty">
+                    <button class="btn" onclick="updateQty('seeri', -1)">-</button>
+                    <span id="seeri" class="count">0</span>
+                    <button class="btn" onclick="updateQty('seeri', 1)">+</button>
+                </div>
+            </div>
         </div>
-        <div class="qty">
-          <button class="btn" onclick="updateQty('seeri', -1)">-</button>
-          <span id="seeri" class="count">0</span>
-          <button class="btn" onclick="updateQty('seeri', 1)">+</button>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
 
-<div class="footer" id="mainFooter">
-  <div class="checkout" onclick="goToSummary()">Checkout</div>
+<div class="footer-actions" id="menuFooter">
+    <div class="btn-primary" onclick="goToSummary()">Review Order Checkout →</div>
 </div>
 
 <!-- PAGE 2: SUMMARY -->
-<div id="summaryPage" class="page container hidden">
-  <h3>Order Summary</h3>
-  <div id="summary"></div>
-  <div class="checkout" onclick="goToDetails()" style="margin-top:20px">Confirm & Enter Details</div>
-  <div class="btn-back" onclick="goBack('mainPage')">Back to Menu</div>
+<div id="summaryPage" class="container hidden">
+    <div class="page-title">Order Checkout</div>
+    <p style="font-size:14px; color:#64748b">Please verify your selection</p>
+    
+    <table class="summary-table">
+        <thead>
+            <tr><th>Variety</th><th>Qty</th><th>Total</th></tr>
+        </thead>
+        <tbody id="summaryRows"></tbody>
+        <tfoot>
+            <tr class="total-row"><td colspan="2">Total Amount</td><td id="finalTotal">₹0</td></tr>
+        </tfoot>
+    </table>
+    <p class="note">* Parcel charges at actuals will be charged additionally upon delivery.</p>
+
+    <div class="footer-actions">
+        <div class="btn-primary" onclick="goToDetails()">Confirm Order</div>
+        <div class="btn-secondary" onclick="goBack('mainPage')">Add More Items</div>
+    </div>
 </div>
 
 <!-- PAGE 3: DETAILS -->
-<div id="detailsPage" class="page container hidden">
-  <h3>Enter Details</h3>
-  <input placeholder="Full Name" id="custName">
-  <input placeholder="Phone Number" id="custPhone" type="tel">
-  <textarea placeholder="Delivery Address" id="custAddress" rows="3"></textarea>
-  <div class="checkout" onclick="placeOrder()">Confirm and Place Order</div>
-  <div class="btn-back" onclick="goBack('summaryPage')">Back</div>
+<div id="detailsPage" class="container hidden">
+    <div class="page-title">Delivery Details</div>
+    <p style="font-size:14px; color:#64748b">Required for Hyderabad Delivery</p>
+    
+    <input id="userName" placeholder="Full Name (Required)">
+    <input id="userPhone" type="tel" placeholder="Phone Number (Required)">
+    <textarea id="userAddr" rows="3" placeholder="Full Delivery Address (Required)"></textarea>
+
+    <div class="footer-actions">
+        <div class="btn-primary" onclick="placeOrder()">Confirm and Place Order</div>
+        <div class="btn-secondary" onclick="goBack('summaryPage')">Back to Summary</div>
+    </div>
 </div>
 
 <!-- PAGE 4: SUCCESS -->
-<div id="successPage" class="page container hidden">
-  <div id="receiptArea">
-    <h2 style="color:var(--green); margin-top:0">Order Confirmed!</h2>
-    <div id="finalOrderList"></div>
-    <hr>
-    <div id="finalDetails"></div>
-  </div>
-  <div class="checkout" onclick="downloadJPG()">Download Receipt (JPG)</div>
-  <div class="btn-back" onclick="location.reload()">New Order</div>
+<div id="successPage" class="container hidden">
+    <div id="receipt">
+        <h2 style="color:var(--green); margin-bottom: 4px;">Thank You!</h2>
+        <p style="margin-top:0; font-size: 14px;">Your order has been sent to the farm.</p>
+        <div id="receiptTable"></div>
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+        <div id="receiptCust" style="text-align: left; font-size: 13px;"></div>
+        <p style="font-weight: bold; color: var(--green); margin-top: 15px;">Shout out to local farming!</p>
+    </div>
+    <div class="btn-primary" onclick="downloadJPG()" style="margin-top: 20px;">Download Receipt (JPG)</div>
+    <div class="btn-secondary" onclick="location.reload()">Place Another Order</div>
 </div>
 
 <script>
@@ -140,14 +208,13 @@ let cart = {
  seeri:{count:0,size:3}
 };
 
-// --- TELEGRAM CONFIG ---
+const PRICE = 290;
 const BOT_TOKEN = "8712573597:AAEHK2ykhiLhFTJrPIVIfFgJ5uqpkoTgsWA"; 
 const CHAT_ID = "-1003967477361";
 
 function selectSize(item,size,el){
  cart[item].size=size;
- let siblings=el.parentNode.children;
- for(let s of siblings){s.classList.remove('active')}
+ [...el.parentNode.children].forEach(s => s.classList.remove('active'));
  el.classList.add('active');
 }
 
@@ -156,70 +223,64 @@ function updateQty(item,val){
  document.getElementById(item).innerText=cart[item].count;
 }
 
-function goBack(targetId) {
-  document.querySelectorAll('.container').forEach(p => p.classList.add('hidden'));
-  document.getElementById(targetId).classList.remove('hidden');
-  if(targetId === 'mainPage') document.getElementById('mainFooter').classList.remove('hidden');
+function goBack(id){
+ document.querySelectorAll('.container').forEach(p => p.classList.add('hidden'));
+ document.querySelectorAll('.footer-actions').forEach(f => f.classList.add('hidden'));
+ document.getElementById(id).classList.remove('hidden');
+ if(id === 'mainPage') document.getElementById('menuFooter').classList.remove('hidden');
+ window.scrollTo(0,0);
 }
 
 function goToSummary(){
- let hasItem=false;
- let summaryHtml='';
+ let rows = ''; let total = 0; let hasItem = false;
  for(let item in cart){
-  if(cart[item].count>0){
-    hasItem=true;
-    summaryHtml+=`<p><b>${item.toUpperCase()}</b>: ${cart[item].count} units (${cart[item].count*cart[item].size} kg total)</p>`;
+  if(cart[item].count > 0){
+    hasItem = true;
+    let kg = cart[item].count * cart[item].size;
+    let sub = kg * PRICE;
+    total += sub;
+    rows += `<tr><td>${item.toUpperCase()}</td><td>${kg} kg</td><td>₹${sub}</td></tr>`;
   }
  }
- if(!hasItem){alert('Add items first');return}
- document.getElementById('mainPage').classList.add('hidden');
- document.getElementById('mainFooter').classList.add('hidden');
- document.getElementById('summaryPage').classList.remove('hidden');
- document.getElementById('summary').innerHTML=summaryHtml;
- document.getElementById('finalOrderList').innerHTML=summaryHtml;
+ if(!hasItem){ alert("Please add some mangoes!"); return; }
+ document.getElementById('summaryRows').innerHTML = rows;
+ document.getElementById('finalTotal').innerText = `₹${total}`;
+ document.getElementById('receiptTable').innerHTML = `<table style="width:100%">${rows}</table><p><b>Total: ₹${total}</b></p>`;
+ goBack('summaryPage');
 }
 
 function goToDetails(){
- document.getElementById('summaryPage').classList.add('hidden');
- document.getElementById('detailsPage').classList.remove('hidden');
+ goBack('detailsPage');
 }
 
 async function placeOrder(){
- const name = document.getElementById('custName').value;
- const phone = document.getElementById('custPhone').value;
- const addr = document.getElementById('custAddress').value;
+ const name = document.getElementById('userName').value.trim();
+ const phone = document.getElementById('userPhone').value.trim();
+ const addr = document.getElementById('userAddr').value.trim();
 
- if(!name || !phone || !addr) { alert("Please fill all details"); return; }
+ if(!name || !phone || !addr){ alert("All fields are mandatory!"); return; }
 
- document.getElementById('finalDetails').innerHTML = `<p><b>Name:</b> ${name}<br><b>Phone:</b> ${phone}<br><b>Address:</b> ${addr}</p>`;
+ document.getElementById('receiptCust').innerHTML = `<b>Deliver to:</b><br>${name}<br>${phone}<br>${addr}`;
 
- // Telegram Message
- let text = `🚀 *NEW ORDER RECEIVED*%0A%0A`;
+ let msg = `🌳 *NEW ORGANIC ORDER*%0A%0A`;
  for(let item in cart){
-    if(cart[item].count > 0) text += `• ${item}: ${cart[item].count * cart[item].size}kg%0A`;
+    if(cart[item].count > 0) msg += `• ${item.toUpperCase()}: ${cart[item].count * cart[item].size}kg%0A`;
  }
- text += `%0A👤 *Name:* ${name}%0A📞 *Phone:* ${phone}%0A📍 *Address:* ${addr}`;
+ msg += `%0A👤 *Customer:* ${name}%0A📞 *Phone:* ${phone}%0A📍 *Addr:* ${addr}%0A%0A_Charges at actuals_`;
 
  try {
-    const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${text}&parse_mode=Markdown`);
-    if(response.ok) {
-        document.getElementById('detailsPage').classList.add('hidden');
-        document.getElementById('successPage').classList.remove('hidden');
-    } else {
-        alert("Telegram error. Check Bot Token or Chat ID.");
-    }
- } catch(e) {
-    alert("Network error. Could not send order.");
- }
+    const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${msg}&parse_mode=Markdown`);
+    if(res.ok) goBack('successPage'); else alert("Bot Error. Check config.");
+ } catch(e) { alert("Network Error."); }
 }
 
 function downloadJPG(){
-  html2canvas(document.querySelector("#receiptArea")).then(canvas => {
+ html2canvas(document.querySelector("#receipt")).then(canvas => {
     let link = document.createElement('a');
-    link.download = 'SudhaFarms_Order.jpg';
+    link.download = 'SudhasFarm_Receipt.jpg';
     link.href = canvas.toDataURL("image/jpeg");
     link.click();
-  });
+ });
 }
 </script>
 </body>
