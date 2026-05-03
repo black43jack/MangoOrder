@@ -23,7 +23,6 @@ body {
     color: var(--text);
 } 
 
-/* REFINED HEADER */
 .header { 
     position: fixed; top: 0; width: 100%; height: 100px;
     background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
@@ -32,11 +31,10 @@ body {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     color: white; text-align: center; z-index: 1000;
 }
-.header .title { font-size: 20px; font-weight: 700; letter-spacing: 0.5px; }
+.header .title { font-size: 20px; font-weight: 700; }
 .header .caption { font-size: 11px; opacity: 0.9; margin-top: 3px; font-style: italic; max-width: 80%; }
 
-/* LAYOUT */
-.container { padding: 115px 16px 110px; max-width: 500px; margin: 0 auto; min-height: 100vh; }
+.container { padding: 115px 16px 140px; max-width: 500px; margin: 0 auto; min-height: 100vh; }
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .card { background: #fff; border-radius: 12px; padding: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border: 1px solid var(--border); }
 .card img { width: 100%; border-radius: 8px; object-fit: cover; height: 100px; }
@@ -45,34 +43,19 @@ body {
 .kesar { grid-column: span 2; }
 .kesar img { height: 150px; }
 
-/* LEFT-ALIGNED CONTROLS */
 .controls { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
 .options { display: flex; gap: 5px; }
-.opt { 
-    padding: 5px 12px; border-radius: 6px; border: 1px solid #ddd; 
-    font-size: 11px; font-weight: 600; cursor: pointer; background: #fff; color: #666;
-}
+.opt { padding: 5px 12px; border-radius: 6px; border: 1px solid #ddd; font-size: 11px; font-weight: 600; cursor: pointer; background: #fff; color: #666; }
 .opt.active { background: var(--sage); color: white; border-color: var(--sage); }
 
-.qty { 
-    display: flex; align-items: center; gap: 12px; 
-    background: #f8fafc; border-radius: 6px; padding: 3px 6px; border: 1px solid #edf2f7;
-}
-.btn-qty { 
-    background: #e2e8f0; color: #475569; border: none; 
-    width: 24px; height: 24px; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer;
-}
+.qty { display: flex; align-items: center; gap: 12px; background: #f8fafc; border-radius: 6px; padding: 3px 6px; border: 1px solid #edf2f7; }
+.btn-qty { background: #e2e8f0; color: #475569; border: none; width: 24px; height: 24px; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; }
 .count { font-weight: 700; font-size: 14px; min-width: 15px; text-align: center; }
 
-/* FOOTER ACTIONS */
-.footer-actions { 
-    position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 15px 20px 30px; 
-    box-shadow: 0 -5px 15px rgba(0,0,0,0.05); z-index: 1000;
-}
+.footer-actions { position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 15px 20px 30px; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); z-index: 1000; }
 .btn-primary { background: var(--sage); color: white; padding: 14px; text-align: center; border-radius: 10px; font-weight: 600; cursor: pointer; border: none; width: 100%; font-size: 15px; }
-.btn-secondary { background: #f1f5f9; color: #64748b; padding: 10px; text-align: center; border-radius: 10px; font-weight: 600; cursor: pointer; margin-top: 8px; font-size: 13px; border: none; width: 100%; }
+.btn-secondary { background: #f1f5f9; color: #64748b; padding: 10px; text-align: center; border-radius: 10px; font-weight: 600; cursor: pointer; margin-top: 8px; font-size: 13px; border: none; width: 100%; display: block; }
 
-/* TABLE STYLES */
 .summary-table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; }
 .summary-table th { text-align: left; padding: 10px; font-size: 12px; color: #94a3b8; border-bottom: 1px solid #eee; }
 .summary-table td { padding: 12px 10px; border-bottom: 1px solid #f8fafc; font-size: 14px; }
@@ -81,7 +64,6 @@ body {
 .hidden { display: none !important; }
 input, textarea { width: 100%; padding: 12px; margin: 6px 0; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 16px; outline-color: var(--sage); }
 
-/* RECEIPT AREA */
 #receipt { background: white; padding: 25px; border: 1px solid #eee; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 15px; }
 .delivery-label { font-weight: 700; color: #64748b; display: inline-block; width: 80px; }
 </style>
@@ -168,6 +150,7 @@ input, textarea { width: 100%; padding: 12px; margin: 6px 0; border-radius: 8px;
     <p style="font-size: 11px; color: #94a3b8; text-align: center; margin-top: 20px;">* Parcel charges at actuals will be charged additionally upon delivery.</p>
 
     <div class="footer-actions">
+        <!-- FIXED: Now goes to detailsPage -->
         <div class="btn-primary" onclick="navigateTo('detailsPage')">Confirm Order</div>
         <div class="btn-secondary" onclick="navigateTo('mainPage')">Add More Items</div>
     </div>
@@ -192,13 +175,13 @@ input, textarea { width: 100%; padding: 12px; margin: 6px 0; border-radius: 8px;
 <div id="successPage" class="container section hidden">
     <div id="receipt">
         <h2 style="color:var(--sage); margin:0 0 10px 0;">Order Confirmed!</h2>
-        <p style="font-size: 13px; color:#666; margin-bottom:20px;">Thank you for choosing Sudha's Organic Farm. Your handpicked mangoes are on the way!</p>
+        <p style="font-size: 13px; color:#666; margin-bottom:20px;">Your handpicked mangoes are on the way!</p>
         <div id="receiptTable"></div>
         <hr style="border: 0; border-top: 1px solid #f1f5f9; margin: 15px 0;">
         <div id="receiptCust" style="text-align: left; font-size: 14px; line-height: 1.6;"></div>
     </div>
     <div class="btn-primary" onclick="downloadJPG()">Download Receipt (JPG)</div>
-    <div class="btn-secondary" onclick="location.reload()">New Order</div>
+    <div class="btn-secondary" onclick="location.reload()">Place New Order</div>
 </div>
 
 <script>
@@ -224,6 +207,7 @@ function updateQty(item,val){
 }
 
 function navigateTo(id){
+ // Hide all sections
  document.querySelectorAll('.section').forEach(p => p.classList.add('hidden'));
  
  if(id === 'summaryPage') {
@@ -243,6 +227,7 @@ function navigateTo(id){
     document.getElementById('receiptTable').innerHTML = `<table style="width:100%">${rows}</table><p style="margin-top:10px"><b>Total: ₹${total}</b></p>`;
  }
 
+ // Show target section
  document.getElementById(id).classList.remove('hidden');
  window.scrollTo(0,0);
 }
@@ -254,6 +239,7 @@ async function placeOrder(){
 
  if(!name || !phone || !addr){ alert("All fields are mandatory!"); return; }
 
+ // Set up receipt content
  document.getElementById('receiptCust').innerHTML = `
     <div><span class="delivery-label">Name</span>: ${name}</div>
     <div><span class="delivery-label">Contact</span>: ${phone}</div>
@@ -268,7 +254,7 @@ async function placeOrder(){
 
  try {
     const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${msg}&parse_mode=Markdown`);
-    if(res.ok) navigateTo('successPage'); else alert("Submission Error.");
+    if(res.ok) navigateTo('successPage'); else alert("Submission Error. Check Bot/Chat IDs.");
  } catch(e) { alert("Network Error."); }
 }
 
