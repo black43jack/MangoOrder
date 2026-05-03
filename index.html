@@ -16,12 +16,16 @@ body { margin:0; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto; b
 .card { background:var(--card); border-radius:14px; padding:10px; box-shadow:0 2px 6px rgba(0,0,0,0.06); }
 .card img { width:100%; border-radius:10px; object-fit:cover; height:130px; }
 .card h4 { margin:6px 0 4px; font-size:14px; }
-.options { display:flex; gap:6px; margin:6px 0 }
-.opt { flex:1; padding:6px; border-radius:8px; border:1px solid #ddd; text-align:center; font-size:12px; cursor:pointer }
+
+/* LEFT ALIGNED CONTROLS */
+.controls { display:flex; flex-direction:column; align-items:flex-start; gap:6px }
+.options { display:flex; gap:6px }
+.opt { padding:6px 10px; border-radius:8px; border:1px solid #ddd; font-size:12px; cursor:pointer }
 .opt.active { background:var(--green); color:#fff; border:none }
-.qty { display:flex; justify-content:space-between; align-items:center; margin-top:6px }
+.qty { display:flex; align-items:center; gap:10px }
 .btn { background:#eee; border:none; padding:6px 10px; border-radius:6px; font-size:14px }
-.count { font-weight:600 }
+.count { font-weight:600; min-width:20px; text-align:center }
+
 .kesar { grid-column: span 2; }
 .hidden { display:none; }
 .page { padding:20px; }
@@ -45,45 +49,52 @@ input, textarea { width:100%; padding:12px; margin:10px 0; border-radius:8px; bo
 <div id="mainPage" class="container">
   <div class="grid">
 
+    <!-- KESAR (DEFAULT SELECTED) -->
     <div class="card kesar">
       <img src="images/kesar.jpg">
       <h4>Kesar</h4>
-      <div class="options">
-        <div class="opt" onclick="selectSize('kesar',3,this)">3 kg</div>
-        <div class="opt" onclick="selectSize('kesar',5,this)">5 kg</div>
-      </div>
-      <div class="qty">
-        <button class="btn" onclick="updateQty('kesar', -1)">-</button>
-        <span id="kesar" class="count">0</span>
-        <button class="btn" onclick="updateQty('kesar', 1)">+</button>
+      <div class="controls">
+        <div class="options">
+          <div class="opt active" id="kesar-3" onclick="selectSize('kesar',3,this)">3 kg</div>
+          <div class="opt" onclick="selectSize('kesar',5,this)">5 kg</div>
+        </div>
+        <div class="qty">
+          <button class="btn" onclick="updateQty('kesar', -1)">-</button>
+          <span id="kesar" class="count">1</span>
+          <button class="btn" onclick="updateQty('kesar', 1)">+</button>
+        </div>
       </div>
     </div>
 
     <div class="card">
       <img src="images/banganapalli.jpg">
       <h4>Banganapalli</h4>
-      <div class="options">
-        <div class="opt" onclick="selectSize('banganapalli',3,this)">3 kg</div>
-        <div class="opt" onclick="selectSize('banganapalli',5,this)">5 kg</div>
-      </div>
-      <div class="qty">
-        <button class="btn" onclick="updateQty('banganapalli', -1)">-</button>
-        <span id="banganapalli" class="count">0</span>
-        <button class="btn" onclick="updateQty('banganapalli', 1)">+</button>
+      <div class="controls">
+        <div class="options">
+          <div class="opt" onclick="selectSize('banganapalli',3,this)">3 kg</div>
+          <div class="opt" onclick="selectSize('banganapalli',5,this)">5 kg</div>
+        </div>
+        <div class="qty">
+          <button class="btn" onclick="updateQty('banganapalli', -1)">-</button>
+          <span id="banganapalli" class="count">0</span>
+          <button class="btn" onclick="updateQty('banganapalli', 1)">+</button>
+        </div>
       </div>
     </div>
 
     <div class="card">
       <img src="images/totapuri.jpg">
       <h4>Totapuri</h4>
-      <div class="options">
-        <div class="opt" onclick="selectSize('totapuri',3,this)">3 kg</div>
-        <div class="opt" onclick="selectSize('totapuri',5,this)">5 kg</div>
-      </div>
-      <div class="qty">
-        <button class="btn" onclick="updateQty('totapuri', -1)">-</button>
-        <span id="totapuri" class="count">0</span>
-        <button class="btn" onclick="updateQty('totapuri', 1)">+</button>
+      <div class="controls">
+        <div class="options">
+          <div class="opt" onclick="selectSize('totapuri',3,this)">3 kg</div>
+          <div class="opt" onclick="selectSize('totapuri',5,this)">5 kg</div>
+        </div>
+        <div class="qty">
+          <button class="btn" onclick="updateQty('totapuri', -1)">-</button>
+          <span id="totapuri" class="count">0</span>
+          <button class="btn" onclick="updateQty('totapuri', 1)">+</button>
+        </div>
       </div>
     </div>
 
@@ -110,7 +121,7 @@ input, textarea { width:100%; padding:12px; margin:10px 0; border-radius:8px; bo
 
 <script>
 let cart = {
- kesar:{count:0,size:0},
+ kesar:{count:1,size:3},
  banganapalli:{count:0,size:0},
  totapuri:{count:0,size:0}
 };
