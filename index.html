@@ -6,83 +6,91 @@
 <title>Sudha's Organic Farm</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
-:root{
-    --green: #16a34a;
-    --dark-green: #065f46;
-    --light: #f8fafc;
-    --card: #ffffff;
-    --text: #1e293b;
-    --price-color: #b91c1c;
+:root {
+    --sage: #4a6741;
+    --dark-forest: #2d3e26;
+    --muted-bg: #fcfdfb;
+    --border: #e2e8f0;
+    --text: #334155;
+    --accent-red: #991b1b;
 }
-*{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
 body { 
-    margin:0; 
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif; 
-    background: var(--light); 
+    margin: 0; 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+    background: var(--muted-bg); 
     color: var(--text);
 } 
 
-/* SHRUNK HEADER (60% of previous) */
+/* REFINED HEADER */
 .header { 
-    position:fixed; top:0; width:100%; height: 100px;
-    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+    position: fixed; top: 0; width: 100%; height: 100px;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
                 url('https://images.unsplash.com/photo-1591073113125-e46713c829ed?auto=format&fit=crop&q=80&w=800');
-    background-size: cover;
-    background-position: center;
+    background-size: cover; background-position: center;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     color: white; text-align: center; z-index: 1000;
 }
-.header .title { font-size: 20px; font-weight: 800; }
-.header .caption { font-size: 11px; opacity: 0.9; margin-top: 2px; }
+.header .title { font-size: 20px; font-weight: 700; letter-spacing: 0.5px; }
+.header .caption { font-size: 11px; opacity: 0.9; margin-top: 3px; font-style: italic; max-width: 80%; }
 
-/* SPACING */
-.container { padding: 115px 12px 100px; max-width: 600px; margin: 0 auto; min-height: 100vh; }
-
-/* GRID & CARDS */
-.grid { display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
-.card { background: var(--card); border-radius: 12px; padding: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
-.card img { width:100%; border-radius:8px; object-fit:cover; height:110px; }
-.card h4 { margin: 6px 0 2px; font-size: 14px; font-weight: 700; }
-.price-tag { color: var(--price-color); font-weight: 700; font-size: 12px; margin-bottom: 6px; }
+/* LAYOUT */
+.container { padding: 115px 16px 110px; max-width: 500px; margin: 0 auto; min-height: 100vh; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.card { background: #fff; border-radius: 12px; padding: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border: 1px solid var(--border); }
+.card img { width: 100%; border-radius: 8px; object-fit: cover; height: 100px; }
+.card h4 { margin: 8px 0 2px; font-size: 14px; color: var(--dark-forest); }
+.price-tag { color: var(--accent-red); font-weight: 600; font-size: 12px; margin-bottom: 10px; opacity: 0.8; }
 .kesar { grid-column: span 2; }
-.kesar img { height: 160px; }
+.kesar img { height: 150px; }
 
-/* CONTROLS */
-.controls { display:flex; flex-direction:column; gap:6px }
-.options { display:flex; gap:6px }
-.opt { flex:1; padding:6px; border-radius:6px; border:1px solid #ddd; font-size:11px; text-align:center; cursor:pointer; background: #fff; font-weight: 600; }
-.opt.active { background: var(--green); color: white; border-color: var(--green); }
-.qty { display:flex; align-items:center; justify-content: space-between; background: #f1f5f9; border-radius: 6px; padding: 4px 8px; }
-.btn { background: var(--green); color: white; border:none; width: 26px; height: 26px; border-radius: 4px; font-size: 16px; font-weight: bold; }
-.count { font-weight: 700; }
-
-/* FLOATING FOOTER ACTIONS */
-.footer-actions { 
-    position:fixed; bottom:0; left:0; right:0; width:100%; background:white; padding:12px 16px 24px; 
-    box-shadow: 0 -4px 10px rgba(0,0,0,0.05); z-index: 1000;
+/* LEFT-ALIGNED CONTROLS */
+.controls { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.options { display: flex; gap: 5px; }
+.opt { 
+    padding: 5px 12px; border-radius: 6px; border: 1px solid #ddd; 
+    font-size: 11px; font-weight: 600; cursor: pointer; background: #fff; color: #666;
 }
-.btn-primary { background: var(--green); color: white; padding: 14px; text-align: center; border-radius: 10px; font-weight: 700; cursor: pointer; border: none; width: 100%; font-size: 16px; }
-.btn-secondary { background: #f1f5f9; color: #475569; padding: 10px; text-align: center; border-radius: 10px; font-weight: 600; cursor: pointer; margin-top: 8px; font-size: 13px; }
+.opt.active { background: var(--sage); color: white; border-color: var(--sage); }
 
-/* TABLE */
+.qty { 
+    display: flex; align-items: center; gap: 12px; 
+    background: #f8fafc; border-radius: 6px; padding: 3px 6px; border: 1px solid #edf2f7;
+}
+.btn-qty { 
+    background: #e2e8f0; color: #475569; border: none; 
+    width: 24px; height: 24px; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer;
+}
+.count { font-weight: 700; font-size: 14px; min-width: 15px; text-align: center; }
+
+/* FOOTER ACTIONS */
+.footer-actions { 
+    position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 15px 20px 30px; 
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.05); z-index: 1000;
+}
+.btn-primary { background: var(--sage); color: white; padding: 14px; text-align: center; border-radius: 10px; font-weight: 600; cursor: pointer; border: none; width: 100%; font-size: 15px; }
+.btn-secondary { background: #f1f5f9; color: #64748b; padding: 10px; text-align: center; border-radius: 10px; font-weight: 600; cursor: pointer; margin-top: 8px; font-size: 13px; border: none; width: 100%; }
+
+/* TABLE STYLES */
 .summary-table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; }
-.summary-table th { background: #f8fafc; text-align: left; padding: 10px; font-size: 12px; border-bottom: 2px solid #e2e8f0; }
-.summary-table td { padding: 10px; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
-.total-row { font-weight: 800; color: var(--dark-green); font-size: 16px; background: #f0fdf4; }
+.summary-table th { text-align: left; padding: 10px; font-size: 12px; color: #94a3b8; border-bottom: 1px solid #eee; }
+.summary-table td { padding: 12px 10px; border-bottom: 1px solid #f8fafc; font-size: 14px; }
+.total-row { font-weight: 700; color: var(--dark-forest); background: #fdfdfd; }
 
-.hidden { display:none !important; }
-input, textarea { width: 100%; padding: 12px; margin: 6px 0; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 16px; }
+.hidden { display: none !important; }
+input, textarea { width: 100%; padding: 12px; margin: 6px 0; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 16px; outline-color: var(--sage); }
 
 /* RECEIPT AREA */
-#receipt { background: white; padding: 20px; border: 2px dashed #ccc; border-radius: 12px; margin-bottom: 15px; }
+#receipt { background: white; padding: 25px; border: 1px solid #eee; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 15px; }
+.delivery-label { font-weight: 700; color: #64748b; display: inline-block; width: 80px; }
 </style>
 </head>
 <body>
 
 <div class="header">
     <div class="title">Sudha's Organic Farm</div>
-    <div class="caption">"Handpicked Gold from Our Trees to Your Table"</div>
+    <div class="caption">"Nurtured by Nature, Ripened by the Sun, Delivered with Love"</div>
 </div>
 
 <!-- PAGE 1: MENU -->
@@ -98,9 +106,9 @@ input, textarea { width: 100%; padding: 12px; margin: 6px 0; border-radius: 8px;
                     <div class="opt" onclick="selectSize('kesar',5,this)">5 kg</div>
                 </div>
                 <div class="qty">
-                    <button class="btn" onclick="updateQty('kesar', -1)">-</button>
+                    <button class="btn-qty" onclick="updateQty('kesar', -1)">-</button>
                     <span id="kesar" class="count">1</span>
-                    <button class="btn" onclick="updateQty('kesar', 1)">+</button>
+                    <button class="btn-qty" onclick="updateQty('kesar', 1)">+</button>
                 </div>
             </div>
         </div>
@@ -115,9 +123,9 @@ input, textarea { width: 100%; padding: 12px; margin: 6px 0; border-radius: 8px;
                     <div class="opt" onclick="selectSize('banganapalli',5,this)">5 kg</div>
                 </div>
                 <div class="qty">
-                    <button class="btn" onclick="updateQty('banganapalli', -1)">-</button>
+                    <button class="btn-qty" onclick="updateQty('banganapalli', -1)">-</button>
                     <span id="banganapalli" class="count">0</span>
-                    <button class="btn" onclick="updateQty('banganapalli', 1)">+</button>
+                    <button class="btn-qty" onclick="updateQty('banganapalli', 1)">+</button>
                 </div>
             </div>
         </div>
@@ -132,22 +140,22 @@ input, textarea { width: 100%; padding: 12px; margin: 6px 0; border-radius: 8px;
                     <div class="opt" onclick="selectSize('seeri',5,this)">5 kg</div>
                 </div>
                 <div class="qty">
-                    <button class="btn" onclick="updateQty('seeri', -1)">-</button>
+                    <button class="btn-qty" onclick="updateQty('seeri', -1)">-</button>
                     <span id="seeri" class="count">0</span>
-                    <button class="btn" onclick="updateQty('seeri', 1)">+</button>
+                    <button class="btn-qty" onclick="updateQty('seeri', 1)">+</button>
                 </div>
             </div>
         </div>
     </div>
     
     <div class="footer-actions">
-        <div class="btn-primary" onclick="navigateTo('summaryPage')">Review Order Checkout →</div>
+        <div class="btn-primary" onclick="navigateTo('summaryPage')">Review Order →</div>
     </div>
 </div>
 
 <!-- PAGE 2: SUMMARY -->
 <div id="summaryPage" class="container section hidden">
-    <h3>Order Checkout</h3>
+    <h3 style="margin-top:0">Order Checkout</h3>
     <table class="summary-table">
         <thead>
             <tr><th>Variety</th><th>Qty</th><th>Subtotal</th></tr>
@@ -157,40 +165,40 @@ input, textarea { width: 100%; padding: 12px; margin: 6px 0; border-radius: 8px;
             <tr class="total-row"><td colspan="2">Order Total</td><td id="finalTotal">₹0</td></tr>
         </tfoot>
     </table>
-    <p style="font-size: 11px; color: #64748b; text-align: center;">* Parcel charges at actuals will be charged additionally.</p>
+    <p style="font-size: 11px; color: #94a3b8; text-align: center; margin-top: 20px;">* Parcel charges at actuals will be charged additionally upon delivery.</p>
 
     <div class="footer-actions">
         <div class="btn-primary" onclick="navigateTo('detailsPage')">Confirm Order</div>
-        <div class="btn-secondary" onclick="navigateTo('mainPage')">← Back to Menu</div>
+        <div class="btn-secondary" onclick="navigateTo('mainPage')">Add More Items</div>
     </div>
 </div>
 
 <!-- PAGE 3: DETAILS -->
 <div id="detailsPage" class="container section hidden">
-    <h3>Delivery Details</h3>
-    <p style="font-size:13px; color:#64748b; margin-bottom:15px">All fields are mandatory for delivery.</p>
+    <h3 style="margin-top:0">Delivery Details</h3>
+    <p style="font-size:13px; color:#94a3b8; margin-bottom:20px">Please provide delivery info for Hyderabad.</p>
     
     <input id="userName" placeholder="Full Name">
-    <input id="userPhone" type="tel" placeholder="Phone Number">
-    <textarea id="userAddr" rows="3" placeholder="Full Address with Landmark"></textarea>
+    <input id="userPhone" type="tel" placeholder="Contact Number">
+    <textarea id="userAddr" rows="3" placeholder="Full Address (House No, Street, Area)"></textarea>
 
     <div class="footer-actions">
-        <div class="btn-primary" onclick="placeOrder()">Confirm and Place Order</div>
-        <div class="btn-secondary" onclick="navigateTo('summaryPage')">← Back</div>
+        <div class="btn-primary" onclick="placeOrder()">Place Order</div>
+        <div class="btn-secondary" onclick="navigateTo('summaryPage')">Back to Summary</div>
     </div>
 </div>
 
 <!-- PAGE 4: SUCCESS -->
 <div id="successPage" class="container section hidden">
     <div id="receipt">
-        <h2 style="color:var(--green); margin:0;">Thank You!</h2>
-        <p style="font-size: 13px; margin-bottom:15px;">We appreciate your support for local organic farming.</p>
+        <h2 style="color:var(--sage); margin:0 0 10px 0;">Order Confirmed!</h2>
+        <p style="font-size: 13px; color:#666; margin-bottom:20px;">Thank you for choosing Sudha's Organic Farm. Your handpicked mangoes are on the way!</p>
         <div id="receiptTable"></div>
-        <hr style="border: 0; border-top: 1px solid #eee; margin: 12px 0;">
-        <div id="receiptCust" style="text-align: left; font-size: 13px;"></div>
+        <hr style="border: 0; border-top: 1px solid #f1f5f9; margin: 15px 0;">
+        <div id="receiptCust" style="text-align: left; font-size: 14px; line-height: 1.6;"></div>
     </div>
     <div class="btn-primary" onclick="downloadJPG()">Download Receipt (JPG)</div>
-    <div class="btn-secondary" onclick="location.reload()">Place New Order</div>
+    <div class="btn-secondary" onclick="location.reload()">New Order</div>
 </div>
 
 <script>
@@ -211,12 +219,11 @@ function selectSize(item,size,el){
 }
 
 function updateQty(item,val){
- cart[item].count=Math.max(0,cart[item].count+val);
- document.getElementById(item).innerText=cart[item].count;
+ cart[item].count = Math.max(0, cart[item].count + val);
+ document.getElementById(item).innerText = cart[item].count;
 }
 
 function navigateTo(id){
- // Hide all pages
  document.querySelectorAll('.section').forEach(p => p.classList.add('hidden'));
  
  if(id === 'summaryPage') {
@@ -230,10 +237,10 @@ function navigateTo(id){
             rows += `<tr><td>${cart[key].name}</td><td>${kg}kg</td><td>₹${sub}</td></tr>`;
         }
     }
-    if(!hasItem){ alert("Please add some items first!"); navigateTo('mainPage'); return; }
+    if(!hasItem){ alert("Please add at least one item."); navigateTo('mainPage'); return; }
     document.getElementById('summaryRows').innerHTML = rows;
     document.getElementById('finalTotal').innerText = `₹${total}`;
-    document.getElementById('receiptTable').innerHTML = `<table style="width:100%">${rows}</table><p><b>Total: ₹${total}</b></p>`;
+    document.getElementById('receiptTable').innerHTML = `<table style="width:100%">${rows}</table><p style="margin-top:10px"><b>Total: ₹${total}</b></p>`;
  }
 
  document.getElementById(id).classList.remove('hidden');
@@ -245,24 +252,28 @@ async function placeOrder(){
  const phone = document.getElementById('userPhone').value.trim();
  const addr = document.getElementById('userAddr').value.trim();
 
- if(!name || !phone || !addr){ alert("Please fill all details!"); return; }
+ if(!name || !phone || !addr){ alert("All fields are mandatory!"); return; }
 
- document.getElementById('receiptCust').innerHTML = `<b>Deliver to:</b><br>${name}<br>${phone}<br>${addr}`;
+ document.getElementById('receiptCust').innerHTML = `
+    <div><span class="delivery-label">Name</span>: ${name}</div>
+    <div><span class="delivery-label">Contact</span>: ${phone}</div>
+    <div><span class="delivery-label">Address</span>: ${addr}</div>
+ `;
 
- let msg = `🌳 *NEW ORDER RECEIVED*%0A%0A`;
+ let msg = `🌳 *SUDHA FARMS ORDER*%0A%0A`;
  for(let key in cart){
     if(cart[key].count > 0) msg += `• ${cart[key].name}: ${cart[key].count * cart[key].size}kg%0A`;
  }
- msg += `%0A👤 *Customer:* ${name}%0A📞 *Phone:* ${phone}%0A📍 *Addr:* ${addr}`;
+ msg += `%0A👤 *Name:* ${name}%0A📞 *Contact:* ${phone}%0A📍 *Address:* ${addr}`;
 
  try {
     const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${msg}&parse_mode=Markdown`);
-    if(res.ok) navigateTo('successPage'); else alert("Telegram Error.");
+    if(res.ok) navigateTo('successPage'); else alert("Submission Error.");
  } catch(e) { alert("Network Error."); }
 }
 
 function downloadJPG(){
- html2canvas(document.querySelector("#receipt")).then(canvas => {
+ html2canvas(document.querySelector("#receipt"), { scale: 2 }).then(canvas => {
     let link = document.createElement('a');
     link.download = 'SudhaFarms_Order.jpg';
     link.href = canvas.toDataURL("image/jpeg");
