@@ -20,14 +20,34 @@
   --bg2: #f7f9f5;
   --text: #1a2e0f;
   --muted: #6b7f60;
+  --app-max-width: 1000px; /* Set a comfortable max width for desktop */
 }
+
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg2); color: var(--text); }
 
-.phone { max-width: 390px; margin: 0 auto; background: var(--bg2); min-height: 100vh; position: relative; }
+/* Center the app on large screens and give it a background color */
+body { 
+  margin: 0; 
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+  background: #eef2eb; 
+  color: var(--text); 
+  display: flex; 
+  justify-content: center; 
+}
 
+/* Updated .phone class to be a responsive container */
+.phone { 
+  width: 100%; 
+  max-width: var(--app-max-width); 
+  background: var(--bg2); 
+  min-height: 100vh; 
+  position: relative; 
+  box-shadow: 0 0 40px rgba(0,0,0,0.05); 
+}
+
+/* Header looks better slightly taller on desktop */
 .header {
-  height: 60px;
+  height: 80px;
   background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
               url('https://images.unsplash.com/photo-1591073113125-e46713c829ed?auto=format&fit=crop&q=80&w=800');
   background-size: cover;
@@ -36,122 +56,80 @@ body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
   align-items: center;
   justify-content: center;
   text-align: center;
-  position: relative;
-  overflow: hidden;
 }
-.header h1 { font-size: 17px; font-weight: 600; color: #fff; margin: 0; letter-spacing: 0.3px; }
-.header p { font-size: 10px; color: rgba(255,255,255,0.65); margin: 2px 0 0; font-style: italic; }
+@media (min-width: 768px) { .header { height: 120px; } }
 
-.content { padding: 20px 16px 110px; }
+.header h1 { font-size: 22px; font-weight: 600; color: #fff; margin: 0; }
+.header p { font-size: 12px; color: rgba(255,255,255,0.8); margin: 4px 0 0; }
 
-.section-label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; margin: 0 0 12px; }
+.content { padding: 20px 20px 140px; }
 
-.product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
-.product-card { background: var(--bg); border: 0.5px solid var(--border); border-radius: 14px; overflow: hidden; }
-.product-card.featured { grid-column: span 2; }
-.product-thumb { width: 100%; object-fit: cover; display: block; }
-.product-card.featured .product-thumb { height: 130px; }
-.product-card:not(.featured) .product-thumb { height: 90px; }
-.product-body { padding: 10px 12px 12px; }
-.product-name { font-size: 14px; font-weight: 600; color: var(--text); margin: 0 0 3px; }
-.product-price { font-size: 12px; color: var(--red); margin: 0 0 10px; font-weight: 500; }
-
-.size-row { display: flex; gap: 5px; margin-bottom: 8px; }
-.size-btn {
-  padding: 4px 10px; border-radius: 6px;
-  border: 0.5px solid var(--border); font-size: 11px; font-weight: 600;
-  cursor: pointer; background: var(--bg2); color: var(--muted); transition: all 0.15s;
+/* RESPONSIVE GRID: 1 col on small mobile, 2 on large mobile, 3 on tablet/PC */
+.product-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+  gap: 16px; 
+  margin-bottom: 24px; 
 }
-.size-btn.active { background: var(--sage); color: #fff; border-color: var(--sage); }
 
-.qty-row {
-  display: flex; align-items: center;
-  background: var(--bg2); border: 0.5px solid var(--border);
-  border-radius: 8px; width: fit-content;
+/* Override the span 2 for featured on desktop so it doesn't look weird */
+@media (max-width: 600px) {
+  .product-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .product-card.featured { grid-column: span 2; }
 }
-.qty-btn {
-  width: 30px; height: 28px; border: none; background: transparent;
-  color: var(--text); font-size: 16px; font-weight: 500; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-}
-.qty-count { font-size: 13px; font-weight: 600; min-width: 24px; text-align: center; color: var(--text); }
-.qty-divider { width: 0.5px; height: 18px; background: var(--border); }
 
+.product-card { background: var(--bg); border: 0.5px solid var(--border); border-radius: 14px; overflow: hidden; transition: transform 0.2s; }
+.product-card:hover { transform: translateY(-2px); }
+.product-thumb { width: 100%; height: 140px; object-fit: cover; display: block; }
+.product-body { padding: 14px; }
+
+/* Utility classes for text and layout */
+.section-label { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 16px; }
+.product-name { font-size: 16px; font-weight: 600; margin: 0 0 5px; }
+.product-price { color: var(--red); font-weight: 600; margin-bottom: 12px; }
+
+/* Responsive Footer: Stays fixed at bottom of the CONTAINER, not the screen */
 .footer-bar {
-  position: fixed; bottom: 0; left: 0; right: 0;
-  max-width: 390px; margin: 0 auto;
+  position: absolute; /* Relative to .phone container */
+  bottom: 0; left: 0; right: 0;
   background: var(--bg);
-  border-top: 0.5px solid var(--border);
-  padding: 12px 16px 28px;
+  border-top: 1px solid var(--border);
+  padding: 16px 20px 30px;
+  position: sticky; /* Keeps it visible while scrolling */
 }
-.total-row-footer { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-.total-label { font-size: 12px; color: var(--muted); }
-.total-amount { font-size: 18px; font-weight: 600; color: var(--text); }
+
+/* Page content centering for Summary and Details */
+#page-summary .content, #page-details .content, #page-success .content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Buttons and Inputs */
 .btn-main {
   background: var(--sage); color: #fff; border: none;
-  border-radius: 12px; padding: 13px; width: 100%;
-  font-size: 15px; font-weight: 600; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; gap: 6px;
+  border-radius: 12px; padding: 16px; width: 100%;
+  font-size: 16px; font-weight: 600; cursor: pointer;
 }
-.btn-main:active { opacity: 0.85; }
-.btn-sub {
-  background: transparent; color: var(--muted); border: none;
-  border-radius: 10px; padding: 8px; width: 100%;
-  font-size: 13px; cursor: pointer; margin-top: 4px;
+.form-input {
+  width: 100%; padding: 14px; border-radius: 10px;
+  border: 1px solid var(--border); font-size: 16px; margin-top: 8px;
 }
 
 .page { display: none; }
 .page.active { display: block; }
 
-.order-review { background: var(--bg); border: 0.5px solid var(--border); border-radius: 14px; overflow: hidden; margin-bottom: 14px; }
-.order-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; border-bottom: 0.5px solid var(--border); }
-.order-row:last-child { border-bottom: none; }
-.order-item-name { font-size: 14px; color: var(--text); }
-.order-item-detail { font-size: 12px; color: var(--muted); margin-top: 2px; }
-.order-item-price { font-size: 14px; font-weight: 600; color: var(--text); }
-
-.total-card {
-  background: var(--sage-light); border: 0.5px solid #C0DD97;
-  border-radius: 12px; padding: 14px 16px; margin-bottom: 8px;
-  display: flex; justify-content: space-between; align-items: center;
-}
-.total-card-label { font-size: 13px; color: var(--sage); font-weight: 600; }
-.total-card-amount { font-size: 20px; font-weight: 600; color: var(--forest); }
-
-.note-card {
-  background: var(--gold-light); border: 0.5px solid #FAC775;
-  border-radius: 10px; padding: 10px 12px;
-  font-size: 11px; color: var(--gold); line-height: 1.5; margin-bottom: 16px;
-}
-
-.form-group { margin-bottom: 14px; }
-.form-label { font-size: 11px; font-weight: 600; color: var(--muted); margin-bottom: 5px; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
-.form-input {
-  width: 100%; padding: 11px 13px; border-radius: 10px;
-  border: 0.5px solid var(--border); background: var(--bg);
-  color: var(--text); font-size: 15px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  outline: none;
-}
-.form-input:focus { border-color: var(--sage); box-shadow: 0 0 0 3px rgba(59,109,17,0.1); }
-
-.success-icon {
-  width: 52px; height: 52px; background: var(--sage-light);
-  border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 16px; border: 0.5px solid #C0DD97;
-}
-
-.receipt-card { background: var(--bg); border: 0.5px solid var(--border); border-radius: 14px; padding: 18px; margin-bottom: 16px; }
-.receipt-header { text-align: center; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 0.5px solid var(--border); }
-.receipt-title { font-size: 16px; font-weight: 600; color: var(--text); margin: 0 0 4px; }
-.receipt-sub { font-size: 12px; color: var(--muted); margin: 0; }
-.receipt-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 0.5px solid var(--border); font-size: 13px; }
-.receipt-row:last-child { border-bottom: none; }
-.receipt-label { color: var(--muted); }
-.receipt-value { color: var(--text); font-weight: 500; text-align: right; max-width: 55%; }
-
-.page-title { font-size: 18px; font-weight: 600; color: var(--text); margin: 0 0 4px; }
-.page-sub { font-size: 13px; color: var(--muted); margin: 0 0 20px; }
+/* Remaining styles (receipt, cards, buttons) from original */
+.size-row { display: flex; gap: 8px; margin-bottom: 12px; }
+.size-btn { padding: 6px 14px; border-radius: 8px; border: 1px solid var(--border); font-size: 12px; cursor: pointer; background: var(--bg2); }
+.size-btn.active { background: var(--sage); color: #fff; border-color: var(--sage); }
+.qty-row { display: flex; align-items: center; background: var(--bg2); border-radius: 8px; width: fit-content; }
+.qty-btn { width: 36px; height: 36px; border: none; background: transparent; font-size: 18px; cursor: pointer; }
+.qty-count { font-size: 14px; font-weight: 600; min-width: 30px; text-align: center; }
+.order-review { background: #fff; border: 1px solid var(--border); border-radius: 14px; margin-bottom: 20px; }
+.order-row { display: flex; justify-content: space-between; padding: 15px; border-bottom: 1px solid var(--border); }
+.total-card { background: var(--sage-light); border-radius: 12px; padding: 20px; display: flex; justify-content: space-between; margin-bottom: 15px; }
+.receipt-card { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 25px; }
+.receipt-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
 </style>
 </head>
 <body>
@@ -381,40 +359,83 @@ function goToSummary() {
 }
 
 async function placeOrder() {
+  // Get form values
   const name  = document.getElementById('userName').value.trim();
   const phone = document.getElementById('userPhone').value.trim();
   const addr  = document.getElementById('userAddr').value.trim();
-  if (!name || !phone || !addr) { alert('All fields are required.'); return; }
+  
+  if (!name || !phone || !addr) { 
+    alert('Please fill in all delivery details.'); 
+    return; 
+  }
 
+  // 1. Prepare Order Details for the Sheet
+  let orderDetails = "";
+  let total = 0;
+  for (let k in cart) {
+    if (cart[k].count > 0) {
+      const kg = cart[k].count * cart[k].size;
+      orderDetails += `${cart[k].name}: ${kg}kg; `;
+      total += kg * PRICE;
+    }
+  }
+
+  // 2. Update Receipt UI
   const now = new Date();
   document.getElementById('receipt-date').innerText = now.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
-
   document.getElementById('receiptCust').innerHTML = `
     <div class="receipt-row"><span class="receipt-label">Name</span><span class="receipt-value">${name}</span></div>
     <div class="receipt-row"><span class="receipt-label">Contact</span><span class="receipt-value">${phone}</span></div>
     <div class="receipt-row"><span class="receipt-label">Address</span><span class="receipt-value">${addr}</span></div>
   `;
 
-  let msg = `🌳 *SUDHA FARMS ORDER*%0A%0A`;
-  for (let k in cart) {
-    if (cart[k].count > 0) msg += `• ${cart[k].name}: ${cart[k].count * cart[k].size}kg%0A`;
-  }
-  msg += `%0A👤 *Name:* ${name}%0A📞 *Contact:* ${phone}%0A📍 *Address:* ${addr}`;
+  // 3. Setup URLs (Double check your Script URL!)
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbwKrSu1eqO0VeeEBiPSin2hS_rSj9WB5qsz_0zRkY3O4oYq92YSbdM4sFPzLsxi2Z7ZXw/exec'; 
+  
+  const sheetData = {
+    name: name,
+    phone: phone,
+    address: addr,
+    orderDetails: orderDetails,
+    totalAmount: total
+  };
 
   try {
-    const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${msg}&parse_mode=Markdown`);
-    if (res.ok) showPage('page-success');
-    else alert('Submission error. Please check your Bot/Chat IDs.');
-  } catch (e) { alert('Network error. Please try again.'); }
-}
+    // Show a loading state (optional)
+    const btn = document.querySelector('#page-details .btn-main');
+    btn.innerText = "Processing...";
+    btn.disabled = true;
 
-function downloadJPG() {
-  html2canvas(document.querySelector('#receipt'), { scale: 2 }).then(canvas => {
-    const link = document.createElement('a');
-    link.download = 'SudhaFarms_Receipt.jpg';
-    link.href = canvas.toDataURL('image/jpeg');
-    link.click();
-  });
+    // Send to Google Sheets
+    const sheetPromise = fetch(scriptURL, {
+      method: 'POST',
+      mode: 'no-cors', 
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(sheetData)
+    });
+
+    // Send to Telegram
+    let msg = `🌳 *SUDHA FARMS ORDER*%0A%0A`;
+    for (let k in cart) {
+      if (cart[k].count > 0) msg += `• ${cart[k].name}: ${cart[k].count * cart[k].size}kg%0A`;
+    }
+    msg += `%0A👤 *Name:* ${name}%0A📞 *Contact:* ${phone}%0A📍 *Address:* ${addr}`;
+    
+    const telegramPromise = fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${msg}&parse_mode=Markdown`);
+
+    // Wait for both to finish
+    await Promise.all([sheetPromise, telegramPromise]);
+    
+    showPage('page-success');
+
+  } catch (e) {
+    console.error("Order Error:", e);
+    alert('Something went wrong. Please try again.');
+    // Reset button if it fails
+    const btn = document.querySelector('#page-details .btn-main');
+    btn.innerText = "Place order →";
+    btn.disabled = false;
+  }
 }
 
 updateFooterTotal();
