@@ -165,7 +165,7 @@ body {
           <img class="product-thumb" src="./images/Kesar.jpg" onerror="this.style.background='#C0DD97';this.style.height='130px';this.removeAttribute('src')">
           <div class="product-body">
             <p class="product-name">Premium Kesar</p>
-            <p class="product-price display-price"></p>
+            <p class="product-price" id="price-kesar"></p>
             <div class="size-row">
               <button class="size-btn active" onclick="selectSize('kesar',3,this)">3 kg</button>
               <button class="size-btn" onclick="selectSize('kesar',5,this)">5 kg</button>
@@ -184,7 +184,7 @@ body {
           <img class="product-thumb" src="./images/Banganapalli.jpg" onerror="this.style.background='#FAC775';this.style.height='90px';this.removeAttribute('src')">
           <div class="product-body">
             <p class="product-name">Banganapalli</p>
-            <p class="product-price display-price"></p>
+            <p class="product-price" id="price-banganapalli"></p>
             <div class="size-row">
               <button class="size-btn active" onclick="selectSize('banganapalli',3,this)">3 kg</button>
               <button class="size-btn" onclick="selectSize('banganapalli',5,this)">5 kg</button>
@@ -203,7 +203,7 @@ body {
           <img class="product-thumb" src="./images/Daseri.jpg" onerror="this.style.background='#B5D4F4';this.style.height='90px';this.removeAttribute('src')">
           <div class="product-body">
             <p class="product-name">Daseri</p>
-            <p class="product-price display-price"></p>
+            <p class="product-price" id="price-daseri"></p>
             <div class="size-row">
               <button class="size-btn active" onclick="selectSize('daseri',3,this)">3 kg</button>
               <button class="size-btn" onclick="selectSize('daseri',5,this)">5 kg</button>
@@ -222,7 +222,7 @@ body {
           <img class="product-thumb" src="./images/Pedda Rasalu.jpg" onerror="this.style.background='#9dbb61';this.style.height='90px';this.removeAttribute('src')">
           <div class="product-body">
             <p class="product-name">Pedda Rasalu</p>
-            <p class="product-price display-price"></p>
+            <p class="product-price" id="price-rasalu"></p>
             <div class="size-row">
               <button class="size-btn active" onclick="selectSize('rasalu',3,this)">3 kg</button>
               <button class="size-btn" onclick="selectSize('rasalu',5,this)">5 kg</button>
@@ -241,7 +241,7 @@ body {
           <img class="product-thumb" src="./images/Totapuri.jpg" onerror="this.style.background='#e6c141';this.style.height='90px';this.removeAttribute('src')">
           <div class="product-body">
             <p class="product-name">Totapuri</p>
-            <p class="product-price display-price"></p>
+            <p class="product-price" id="price-totapurmi"></p>
             <div class="size-row">
               <button class="size-btn active" onclick="selectSize('totapurmi',3,this)">3 kg</button>
               <button class="size-btn" onclick="selectSize('totapurmi',5,this)">5 kg</button>
@@ -260,7 +260,7 @@ body {
           <img class="product-thumb" src="./images/Neelam.jpg" onerror="this.style.background='#f09d37';this.style.height='90px';this.removeAttribute('src')">
           <div class="product-body">
             <p class="product-name">Neelam</p>
-            <p class="product-price display-price"></p>
+            <p class="product-price" id="price-neelam"></p>
             <div class="size-row">
               <button class="size-btn active" onclick="selectSize('neelam',3,this)">3 kg</button>
               <button class="size-btn" onclick="selectSize('neelam',5,this)">5 kg</button>
@@ -286,7 +286,6 @@ body {
     </div>
   </div>
 
-  <!-- Pages 2, 3, 4 remain identical in HTML structure -->
   <div id="page-summary" class="page">
     <div class="content">
       <p class="page-title" style="font-size:24px; font-weight:700; margin-bottom:8px;">Order summary</p>
@@ -354,24 +353,33 @@ body {
 </div>
 
 <script>
-// SINGLE CONSTANT FOR PRICE
-const PRICE = 270;
+// SIX PRICING CONSTANTS
+const PRICE_KESAR = 270;
+const PRICE_BANGANAPALLI = 250;
+const PRICE_DASERI = 220;
+const PRICE_RASALU = 280;
+const PRICE_TOTAPURMI = 100;
+const PRICE_NEELAM = 240;
+
 const BOT_TOKEN = "8712573597:AAEHK2ykhiLhFTJrPIVIfFgJ5uqpkoTgsWA"; 
 const CHAT_ID = "-1003967477361";
 
 let cart = {
-  kesar:        { name: 'Premium Kesar',   count: 1, size: 3 },
-  banganapalli: { name: 'Banganapalli',    count: 0, size: 3 },
-  daseri:       { name: 'Daseri',          count: 0, size: 3 },
-  rasalu:       { name: 'Pedda Rasalu',    count: 0, size: 3 },
-  totapurmi:    { name: 'Totapurmi',       count: 0, size: 3 },
-  neelam:      { name: 'Neelam',         count: 0, size: 3 }
+  kesar:        { name: 'Premium Kesar',   count: 1, size: 3, price: PRICE_KESAR },
+  banganapalli: { name: 'Banganapalli',    count: 0, size: 3, price: PRICE_BANGANAPALLI },
+  daseri:       { name: 'Daseri',          count: 0, size: 3, price: PRICE_DASERI },
+  rasalu:       { name: 'Pedda Rasalu',    count: 0, size: 3, price: PRICE_RASALU },
+  totapurmi:    { name: 'Totapurmi',       count: 0, size: 3, price: PRICE_TOTAPURMI },
+  neelam:       { name: 'Neelam',          count: 0, size: 3, price: PRICE_NEELAM }
 };
 
-// Initialize price displays in HTML
-document.querySelectorAll('.display-price').forEach(el => {
-  el.innerText = `₹${PRICE} per kg`;
-});
+// Initialize price displays in HTML using the constants
+document.getElementById('price-kesar').innerText = `₹${PRICE_KESAR} per kg`;
+document.getElementById('price-banganapalli').innerText = `₹${PRICE_BANGANAPALLI} per kg`;
+document.getElementById('price-daseri').innerText = `₹${PRICE_DASERI} per kg`;
+document.getElementById('price-rasalu').innerText = `₹${PRICE_RASALU} per kg`;
+document.getElementById('price-totapurmi').innerText = `₹${PRICE_TOTAPURMI} per kg`;
+document.getElementById('price-neelam').innerText = `₹${PRICE_NEELAM} per kg`;
 
 function selectSize(item, size, el) {
   cart[item].size = size;
@@ -388,7 +396,7 @@ function updateQty(item, val) {
 
 function updateFooterTotal() {
   let total = 0;
-  for (let k in cart) if (cart[k].count > 0) total += cart[k].count * cart[k].size * PRICE;
+  for (let k in cart) if (cart[k].count > 0) total += cart[k].count * cart[k].size * cart[k].price;
   document.getElementById('footer-total').innerText = total > 0 ? '₹' + total.toLocaleString('en-IN') : '₹0';
 }
 
@@ -405,12 +413,12 @@ function goToSummary() {
     if (cart[k].count > 0) {
       hasItem = true;
       const kg = cart[k].count * cart[k].size;
-      const sub = kg * PRICE;
+      const sub = kg * cart[k].price;
       total += sub;
       rows += `<div class="order-row">
         <div>
           <div class="order-item-name">${cart[k].name}</div>
-          <div class="order-item-detail">${cart[k].count} box × ${cart[k].size} kg = ${kg} kg</div>
+          <div class="order-item-detail">${cart[k].count} box × ${cart[k].size} kg = ${kg} kg (@ ₹${cart[k].price}/kg)</div>
         </div>
         <div class="order-item-price">₹${sub.toLocaleString('en-IN')}</div>
       </div>`;
@@ -446,7 +454,7 @@ async function placeOrder() {
       const kg = cart[k].count * cart[k].size;
       orderDetails += `${cart[k].name}: ${kg}kg; `;
       telegramItems += `• ${cart[k].name}: ${kg}kg%0A`;
-      total += kg * PRICE;
+      total += kg * cart[k].price;
     }
   }
 
