@@ -20,12 +20,11 @@
   --bg2: #f7f9f5;
   --text: #1a2e0f;
   --muted: #6b7f60;
-  --app-max-width: 1000px; /* Set a comfortable max width for desktop */
+  --app-max-width: 1000px;
 }
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-/* Center the app on large screens and give it a background color */
 body { 
   margin: 0; 
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
@@ -35,7 +34,6 @@ body {
   justify-content: center; 
 }
 
-/* Updated .phone class to be a responsive container */
 .phone { 
   width: 100%; 
   max-width: var(--app-max-width); 
@@ -45,7 +43,6 @@ body {
   box-shadow: 0 0 40px rgba(0,0,0,0.05); 
 }
 
-/* Header looks better slightly taller on desktop */
 .header {
   height: 80px;
   background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
@@ -64,7 +61,6 @@ body {
 
 .content { padding: 20px 20px 140px; }
 
-/* RESPONSIVE GRID: 1 col on small mobile, 2 on large mobile, 3 on tablet/PC */
 .product-grid { 
   display: grid; 
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
@@ -72,7 +68,6 @@ body {
   margin-bottom: 24px; 
 }
 
-/* Override the span 2 for featured on desktop so it doesn't look weird */
 @media (max-width: 600px) {
   .product-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
   .product-card.featured { grid-column: span 2; }
@@ -83,53 +78,71 @@ body {
 .product-thumb { width: 100%; height: 140px; object-fit: cover; display: block; }
 .product-body { padding: 14px; }
 
-/* Utility classes for text and layout */
 .section-label { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 16px; }
 .product-name { font-size: 16px; font-weight: 600; margin: 0 0 5px; }
 .product-price { color: var(--red); font-weight: 600; margin-bottom: 12px; }
 
-/* Responsive Footer: Stays fixed at bottom of the CONTAINER, not the screen */
 .footer-bar {
-  position: absolute; /* Relative to .phone container */
+  position: sticky;
   bottom: 0; left: 0; right: 0;
   background: var(--bg);
   border-top: 1px solid var(--border);
   padding: 16px 20px 30px;
-  position: sticky; /* Keeps it visible while scrolling */
+  z-index: 100;
 }
 
-/* Page content centering for Summary and Details */
+.total-row-footer { display: flex; justify-content: space-between; margin-bottom: 12px; }
+.total-label { font-size: 14px; color: var(--muted); }
+.total-amount { font-size: 18px; font-weight: 700; color: var(--forest); }
+
 #page-summary .content, #page-details .content, #page-success .content {
   max-width: 600px;
   margin: 0 auto;
 }
 
-/* Buttons and Inputs */
 .btn-main {
   background: var(--sage); color: #fff; border: none;
   border-radius: 12px; padding: 16px; width: 100%;
   font-size: 16px; font-weight: 600; cursor: pointer;
 }
+.btn-sub {
+  background: transparent; color: var(--muted); border: none;
+  width: 100%; padding: 12px; font-size: 14px; cursor: pointer; margin-top: 8px;
+}
+
+.form-group { margin-bottom: 16px; }
+.form-label { display: block; font-size: 13px; font-weight: 600; color: var(--muted); margin-bottom: 6px; }
 .form-input {
   width: 100%; padding: 14px; border-radius: 10px;
-  border: 1px solid var(--border); font-size: 16px; margin-top: 8px;
+  border: 1px solid var(--border); font-size: 16px;
 }
 
 .page { display: none; }
 .page.active { display: block; }
 
-/* Remaining styles (receipt, cards, buttons) from original */
 .size-row { display: flex; gap: 8px; margin-bottom: 12px; }
 .size-btn { padding: 6px 14px; border-radius: 8px; border: 1px solid var(--border); font-size: 12px; cursor: pointer; background: var(--bg2); }
 .size-btn.active { background: var(--sage); color: #fff; border-color: var(--sage); }
 .qty-row { display: flex; align-items: center; background: var(--bg2); border-radius: 8px; width: fit-content; }
 .qty-btn { width: 36px; height: 36px; border: none; background: transparent; font-size: 18px; cursor: pointer; }
 .qty-count { font-size: 14px; font-weight: 600; min-width: 30px; text-align: center; }
+.qty-divider { width: 1px; height: 20px; background: var(--border); }
+
 .order-review { background: #fff; border: 1px solid var(--border); border-radius: 14px; margin-bottom: 20px; }
 .order-row { display: flex; justify-content: space-between; padding: 15px; border-bottom: 1px solid var(--border); }
+.order-item-name { font-weight: 600; font-size: 15px; }
+.order-item-detail { font-size: 12px; color: var(--muted); }
 .total-card { background: var(--sage-light); border-radius: 12px; padding: 20px; display: flex; justify-content: space-between; margin-bottom: 15px; }
-.receipt-card { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 25px; }
-.receipt-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
+.total-card-label { font-weight: 600; }
+.total-card-amount { font-weight: 700; color: var(--forest); }
+.note-card { font-size: 12px; color: var(--gold); background: var(--gold-light); padding: 12px; border-radius: 10px; text-align: center; }
+
+.receipt-card { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 25px; margin-bottom: 20px; }
+.receipt-header { text-align: center; border-bottom: 1px dashed var(--border); padding-bottom: 15px; margin-bottom: 15px; }
+.receipt-title { font-weight: 700; color: var(--forest); margin: 0; }
+.receipt-sub { font-size: 12px; color: var(--muted); margin: 4px 0 0; }
+.receipt-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; font-size: 14px; }
+.success-icon { width: 60px; height: 60px; background: var(--sage-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
 </style>
 </head>
 <body>
@@ -142,17 +155,17 @@ body {
     </div>
   </div>
 
-  <!-- PAGE 1: MENU -->
   <div id="page-menu" class="page active">
     <div class="content">
       <p class="section-label">Available Varieties</p>
       <div class="product-grid">
 
+        <!-- Tiles 1-6 -->
         <div class="product-card featured">
           <img class="product-thumb" src="./images/Kesar.jpg" onerror="this.style.background='#C0DD97';this.style.height='130px';this.removeAttribute('src')">
           <div class="product-body">
             <p class="product-name">Premium Kesar</p>
-            <p class="product-price">₹290 per kg</p>
+            <p class="product-price display-price"></p>
             <div class="size-row">
               <button class="size-btn active" onclick="selectSize('kesar',3,this)">3 kg</button>
               <button class="size-btn" onclick="selectSize('kesar',5,this)">5 kg</button>
@@ -171,7 +184,7 @@ body {
           <img class="product-thumb" src="./images/Banganapalli.jpg" onerror="this.style.background='#FAC775';this.style.height='90px';this.removeAttribute('src')">
           <div class="product-body">
             <p class="product-name">Banganapalli</p>
-            <p class="product-price">₹290 per kg</p>
+            <p class="product-price display-price"></p>
             <div class="size-row">
               <button class="size-btn active" onclick="selectSize('banganapalli',3,this)">3 kg</button>
               <button class="size-btn" onclick="selectSize('banganapalli',5,this)">5 kg</button>
@@ -190,7 +203,7 @@ body {
           <img class="product-thumb" src="./images/Seeri.jpg" onerror="this.style.background='#B5D4F4';this.style.height='90px';this.removeAttribute('src')">
           <div class="product-body">
             <p class="product-name">Seeri</p>
-            <p class="product-price">₹290 per kg</p>
+            <p class="product-price display-price"></p>
             <div class="size-row">
               <button class="size-btn active" onclick="selectSize('seeri',3,this)">3 kg</button>
               <button class="size-btn" onclick="selectSize('seeri',5,this)">5 kg</button>
@@ -201,6 +214,63 @@ body {
               <span class="qty-count" id="seeri">0</span>
               <div class="qty-divider"></div>
               <button class="qty-btn" onclick="updateQty('seeri',1)">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <img class="product-thumb" src="./images/Imampasand.jpg" onerror="this.style.background='#9dbb61';this.style.height='90px';this.removeAttribute('src')">
+          <div class="product-body">
+            <p class="product-name">Imampasand</p>
+            <p class="product-price display-price"></p>
+            <div class="size-row">
+              <button class="size-btn active" onclick="selectSize('imampasand',3,this)">3 kg</button>
+              <button class="size-btn" onclick="selectSize('imampasand',5,this)">5 kg</button>
+            </div>
+            <div class="qty-row">
+              <button class="qty-btn" onclick="updateQty('imampasand',-1)">−</button>
+              <div class="qty-divider"></div>
+              <span class="qty-count" id="imampasand">0</span>
+              <div class="qty-divider"></div>
+              <button class="qty-btn" onclick="updateQty('imampasand',1)">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <img class="product-thumb" src="./images/Dasheri.jpg" onerror="this.style.background='#e6c141';this.style.height='90px';this.removeAttribute('src')">
+          <div class="product-body">
+            <p class="product-name">Dasheri</p>
+            <p class="product-price display-price"></p>
+            <div class="size-row">
+              <button class="size-btn active" onclick="selectSize('dasheri',3,this)">3 kg</button>
+              <button class="size-btn" onclick="selectSize('dasheri',5,this)">5 kg</button>
+            </div>
+            <div class="qty-row">
+              <button class="qty-btn" onclick="updateQty('dasheri',-1)">−</button>
+              <div class="qty-divider"></div>
+              <span class="qty-count" id="dasheri">0</span>
+              <div class="qty-divider"></div>
+              <button class="qty-btn" onclick="updateQty('dasheri',1)">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <img class="product-thumb" src="./images/Mallika.jpg" onerror="this.style.background='#f09d37';this.style.height='90px';this.removeAttribute('src')">
+          <div class="product-body">
+            <p class="product-name">Mallika</p>
+            <p class="product-price display-price"></p>
+            <div class="size-row">
+              <button class="size-btn active" onclick="selectSize('mallika',3,this)">3 kg</button>
+              <button class="size-btn" onclick="selectSize('mallika',5,this)">5 kg</button>
+            </div>
+            <div class="qty-row">
+              <button class="qty-btn" onclick="updateQty('mallika',-1)">−</button>
+              <div class="qty-divider"></div>
+              <span class="qty-count" id="mallika">0</span>
+              <div class="qty-divider"></div>
+              <button class="qty-btn" onclick="updateQty('mallika',1)">+</button>
             </div>
           </div>
         </div>
@@ -216,11 +286,11 @@ body {
     </div>
   </div>
 
-  <!-- PAGE 2: SUMMARY -->
+  <!-- Pages 2, 3, 4 remain identical in HTML structure -->
   <div id="page-summary" class="page">
     <div class="content">
-      <p class="page-title">Order summary</p>
-      <p class="page-sub">Review your selection before checkout</p>
+      <p class="page-title" style="font-size:24px; font-weight:700; margin-bottom:8px;">Order summary</p>
+      <p class="page-sub" style="color:var(--muted); margin-bottom:24px;">Review your selection before checkout</p>
       <div class="order-review" id="summaryRows"></div>
       <div class="total-card">
         <span class="total-card-label">Order total</span>
@@ -234,11 +304,10 @@ body {
     </div>
   </div>
 
-  <!-- PAGE 3: DETAILS -->
   <div id="page-details" class="page">
     <div class="content">
-      <p class="page-title">Delivery details</p>
-      <p class="page-sub">For delivery within Hyderabad</p>
+      <p class="page-title" style="font-size:24px; font-weight:700; margin-bottom:8px;">Delivery details</p>
+      <p class="page-sub" style="color:var(--muted); margin-bottom:24px;">For delivery within Hyderabad</p>
       <div class="form-group">
         <label class="form-label">Full name</label>
         <input class="form-input" id="userName" placeholder="Your name" type="text">
@@ -258,7 +327,6 @@ body {
     </div>
   </div>
 
-  <!-- PAGE 4: SUCCESS -->
   <div id="page-success" class="page">
     <div class="content" style="padding-top: 32px;">
       <div class="success-icon">
@@ -267,8 +335,8 @@ body {
         </svg>
       </div>
       <div style="text-align:center; margin-bottom: 24px;">
-        <p class="page-title" style="text-align:center;">Order confirmed!</p>
-        <p class="page-sub" style="text-align:center; margin:0;">Your mangoes are on their way</p>
+        <p class="page-title" style="font-size:24px; font-weight:700; margin:0;">Order confirmed!</p>
+        <p class="page-sub" style="color:var(--muted); margin:4px 0 0;">Your mangoes are on their way</p>
       </div>
       <div class="receipt-card" id="receipt">
         <div class="receipt-header">
@@ -286,16 +354,24 @@ body {
 </div>
 
 <script>
-  
-const PRICE = 290;
+// SINGLE CONSTANT FOR PRICE
+const PRICE = 270;
 const BOT_TOKEN = "8712573597:AAEHK2ykhiLhFTJrPIVIfFgJ5uqpkoTgsWA"; 
 const CHAT_ID = "-1003967477361";
 
 let cart = {
-  kesar:        { name: 'Premium Kesar',  count: 1, size: 3 },
-  banganapalli: { name: 'Banganapalli',   count: 0, size: 3 },
-  seeri:        { name: 'Seeri',          count: 0, size: 3 }
+  kesar:        { name: 'Premium Kesar',   count: 1, size: 3 },
+  banganapalli: { name: 'Banganapalli',    count: 0, size: 3 },
+  seeri:        { name: 'Seeri',           count: 0, size: 3 },
+  imampasand:   { name: 'Imampasand',      count: 0, size: 3 },
+  dasheri:      { name: 'Dasheri',         count: 0, size: 3 },
+  mallika:      { name: 'Mallika',         count: 0, size: 3 }
 };
+
+// Initialize price displays in HTML
+document.querySelectorAll('.display-price').forEach(el => {
+  el.innerText = `₹${PRICE} per kg`;
+});
 
 function selectSize(item, size, el) {
   cart[item].size = size;
@@ -345,10 +421,7 @@ function goToSummary() {
     }
   }
   if (!hasItem) { alert('Please add at least one item.'); return; }
-  rows += `<div class="order-row" style="background:var(--bg2)">
-    <div class="order-item-name" style="font-weight:600">Total</div>
-    <div class="order-item-price" style="font-size:15px">₹${total.toLocaleString('en-IN')}</div>
-  </div>`;
+  
   document.getElementById('summaryRows').innerHTML = rows;
   document.getElementById('finalTotal').innerText = '₹' + total.toLocaleString('en-IN');
   document.getElementById('receiptItems').innerHTML = receiptItems + `<div class="receipt-row">
@@ -359,28 +432,24 @@ function goToSummary() {
 }
 
 async function placeOrder() {
-  // Get form values
   const name  = document.getElementById('userName').value.trim();
   const phone = document.getElementById('userPhone').value.trim();
   const addr  = document.getElementById('userAddr').value.trim();
   
-  if (!name || !phone || !addr) { 
-    alert('Please fill in all delivery details.'); 
-    return; 
-  }
+  if (!name || !phone || !addr) { alert('Please fill in all delivery details.'); return; }
 
-  // 1. Prepare Order Details for the Sheet
   let orderDetails = "";
   let total = 0;
+  let telegramItems = "";
   for (let k in cart) {
     if (cart[k].count > 0) {
       const kg = cart[k].count * cart[k].size;
       orderDetails += `${cart[k].name}: ${kg}kg; `;
+      telegramItems += `• ${cart[k].name}: ${kg}kg%0A`;
       total += kg * PRICE;
     }
   }
 
-  // 2. Update Receipt UI
   const now = new Date();
   document.getElementById('receipt-date').innerText = now.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
   document.getElementById('receiptCust').innerHTML = `
@@ -389,24 +458,14 @@ async function placeOrder() {
     <div class="receipt-row"><span class="receipt-label">Address</span><span class="receipt-value">${addr}</span></div>
   `;
 
-  // 3. Setup URLs (Double check your Script URL!)
   const scriptURL = 'https://script.google.com/macros/s/AKfycbwKrSu1eqO0VeeEBiPSin2hS_rSj9WB5qsz_0zRkY3O4oYq92YSbdM4sFPzLsxi2Z7ZXw/exec'; 
-  
-  const sheetData = {
-    name: name,
-    phone: phone,
-    address: addr,
-    orderDetails: orderDetails,
-    totalAmount: total
-  };
+  const sheetData = { name, phone, address: addr, orderDetails, totalAmount: total };
 
   try {
-    // Show a loading state (optional)
     const btn = document.querySelector('#page-details .btn-main');
     btn.innerText = "Processing...";
     btn.disabled = true;
 
-    // Send to Google Sheets
     const sheetPromise = fetch(scriptURL, {
       method: 'POST',
       mode: 'no-cors', 
@@ -414,28 +473,27 @@ async function placeOrder() {
       body: JSON.stringify(sheetData)
     });
 
-    // Send to Telegram
-    let msg = `🌳 *SUDHA FARMS ORDER*%0A%0A`;
-    for (let k in cart) {
-      if (cart[k].count > 0) msg += `• ${cart[k].name}: ${cart[k].count * cart[k].size}kg%0A`;
-    }
-    msg += `%0A👤 *Name:* ${name}%0A📞 *Contact:* ${phone}%0A📍 *Address:* ${addr}`;
-    
+    let msg = `🌳 *SUDHA FARMS ORDER*%0A%0A${telegramItems}%0A👤 *Name:* ${name}%0A📞 *Contact:* ${phone}%0A📍 *Address:* ${addr}%0A💰 *Total:* ₹${total.toLocaleString('en-IN')}`;
     const telegramPromise = fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${msg}&parse_mode=Markdown`);
 
-    // Wait for both to finish
     await Promise.all([sheetPromise, telegramPromise]);
-    
     showPage('page-success');
-
   } catch (e) {
-    console.error("Order Error:", e);
-    alert('Something went wrong. Please try again.');
-    // Reset button if it fails
+    alert('Something went wrong.');
     const btn = document.querySelector('#page-details .btn-main');
     btn.innerText = "Place order →";
     btn.disabled = false;
   }
+}
+
+function downloadJPG() {
+  const receipt = document.getElementById('receipt');
+  html2canvas(receipt, { scale: 2 }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = `order-receipt-${Date.now()}.jpg`;
+    link.href = canvas.toDataURL('image/jpeg', 0.9);
+    link.click();
+  });
 }
 
 updateFooterTotal();
