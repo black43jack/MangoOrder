@@ -241,17 +241,17 @@ body {
           <img class="product-thumb" src="./images/Totapuri.jpg" onerror="this.style.background='#e6c141';this.style.height='90px';this.removeAttribute('src')">
           <div class="product-body">
             <p class="product-name">Totapuri</p>
-            <p class="product-price" id="price-totapurmi"></p>
+            <p class="product-price" id="price-totapuri"></p>
             <div class="size-row">
-              <button class="size-btn active" onclick="selectSize('totapurmi',3,this)">3 kg</button>
-              <button class="size-btn" onclick="selectSize('totapurmi',5,this)">5 kg</button>
+              <button class="size-btn active" onclick="selectSize('totapuri',3,this)">3 kg</button>
+              <button class="size-btn" onclick="selectSize('totapuri',5,this)">5 kg</button>
             </div>
             <div class="qty-row">
-              <button class="qty-btn" onclick="updateQty('totapurmi',-1)">−</button>
+              <button class="qty-btn" onclick="updateQty('totapuri',-1)">−</button>
               <div class="qty-divider"></div>
-              <span class="qty-count" id="totapurmi">0</span>
+              <span class="qty-count" id="totapuri">0</span>
               <div class="qty-divider"></div>
-              <button class="qty-btn" onclick="updateQty('totapurmi',1)">+</button>
+              <button class="qty-btn" onclick="updateQty('totapuri',1)">+</button>
             </div>
           </div>
         </div>
@@ -355,11 +355,11 @@ body {
 <script>
 // SIX PRICING CONSTANTS
 const PRICE_KESAR = 270;
-const PRICE_BANGANAPALLI = 250;
-const PRICE_DASERI = 220;
-const PRICE_RASALU = 280;
-const PRICE_TOTAPURMI = 100;
-const PRICE_NEELAM = 240;
+const PRICE_BANGANAPALLI = 270;
+const PRICE_DASERI = 270;
+const PRICE_RASALU = 270;
+const PRICE_TOTAPURI = 80;
+const PRICE_NEELAM = 120;
 
 const BOT_TOKEN = "8712573597:AAEHK2ykhiLhFTJrPIVIfFgJ5uqpkoTgsWA"; 
 const CHAT_ID = "-1003967477361";
@@ -369,7 +369,7 @@ let cart = {
   banganapalli: { name: 'Banganapalli',    count: 0, size: 3, price: PRICE_BANGANAPALLI },
   daseri:       { name: 'Daseri',          count: 0, size: 3, price: PRICE_DASERI },
   rasalu:       { name: 'Pedda Rasalu',    count: 0, size: 3, price: PRICE_RASALU },
-  totapurmi:    { name: 'Totapurmi',       count: 0, size: 3, price: PRICE_TOTAPURMI },
+  totapuri:    { name: 'Totapuri',       count: 0, size: 3, price: PRICE_TOTAPURI },
   neelam:       { name: 'Neelam',          count: 0, size: 3, price: PRICE_NEELAM }
 };
 
@@ -378,7 +378,7 @@ document.getElementById('price-kesar').innerText = `₹${PRICE_KESAR} per kg`;
 document.getElementById('price-banganapalli').innerText = `₹${PRICE_BANGANAPALLI} per kg`;
 document.getElementById('price-daseri').innerText = `₹${PRICE_DASERI} per kg`;
 document.getElementById('price-rasalu').innerText = `₹${PRICE_RASALU} per kg`;
-document.getElementById('price-totapurmi').innerText = `₹${PRICE_TOTAPURMI} per kg`;
+document.getElementById('price-totapuri').innerText = `₹${PRICE_TOTAPURI} per kg`;
 document.getElementById('price-neelam').innerText = `₹${PRICE_NEELAM} per kg`;
 
 function selectSize(item, size, el) {
